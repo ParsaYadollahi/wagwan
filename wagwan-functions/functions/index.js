@@ -1,10 +1,23 @@
 const fbfunctions = require('firebase-functions');
 const admin = require('firebase-admin');
+const app = require('express')();
 
 admin.initializeApp(); //function already knows that .firebaserc is  id of app, so pass nothing
+const config = {
+    apiKey: "AIzaSyDB7JOFrVN1aZJ4nwm5og1c8tGjIuvpWp0",
+    authDomain: "wagwan-6797c.firebaseapp.com",
+    databaseURL: "https://wagwan-6797c.firebaseio.com",
+    projectId: "wagwan-6797c",
+    storageBucket: "wagwan-6797c.appspot.com",
+    messagingSenderId: "1029580455728",
+    appId: "1:1029580455728:web:4f2560ebb1f653dcd892f5",
+    measurementId: "G-Q2R590GX26"
+};
 
-const express = require('express');
-const app = express();
+const firebase = require('firebase'); // firebase is server
+firebase.initializeApp(config);
+
+const db = admin.firestore(); // Firestore is fetching the data in firebase (nosql db for more structured quering and easy since key:value)
 
 exports.helloWorld = fbfunctions.https.onRequest((request, response) => {
  response.send("Hello World!");
@@ -59,13 +72,12 @@ exports.helloWorld = fbfunctions.https.onRequest((request, response) => {
 
 
 app.get('/screams', (req, resp) => { 
-    admin // Can check out more imports from firebase.get-data
-        .firestore()
+    db
         .collection('screams') // get elements at 'screams' in db
         .orderBy('createAt', 'desc') // order the output by the keyword "createdat"
         .get()
         .then((data) => { // promise 
-            let screams = []; // initialize array to add screams to it
+            let screams = []; // in itialize array to add screams to it
             data.forEach((doc) => { // Data is a collection of elements, looping thru them all and adding them to an Array
                 screams.push({
                     screamId: doc.id,
@@ -87,8 +99,7 @@ app.post('/screams', (req, resp) => { // takes in path and handler
         createAt: new Date().toISOString()
     };
 
-    admin
-        .firestore()
+    db
         .collection('screams') // like python dictionary, get elements at screams
         .add(new_Scream) // takes json obj and adds it to database (one above)
         .then(doc => { //returns a promise | If here means weve made a new docs
@@ -99,6 +110,59 @@ app.post('/screams', (req, resp) => { // takes in path and handler
             console.error(err);
         });
 })
+
+// SignUp route
+app.post('/signup', (req, res) => {
+    const newUser = {
+        email: req.body.email,
+        password: req.body.password,
+        confirmPassword: req.body.confirmPassword,
+        handle: req.body.handle,
+    };
+    
+    //TO DO: validate JSON
+
+    let token, userId;
+    db.doc(`/users/${newUser.handle}`)
+        .get()
+        .then(doc => {
+            if (doc.exists) { // if exist, theres a prob cuz all HANDLES must be unique
+                return res.status(400).json({ handle: 'This handle is already taken'}) // return an object error
+            } else {
+                return firebase
+                    .auth()
+                    .createUserWithEmailAndPassword(newUser.email, newUser.password); // firebase's way for new user account with password
+            }
+        })
+        .then((data) => { // want to return access token 
+            userId = data.user.uid;
+            return data.user.getIdToken();
+        })
+        .then((idtoken) => {
+            token = idtoken; 
+            const userCredentials = { // schema for email of user
+                handle: newUser.handle,
+                email: newUser.email,
+                createAt: new Date().toISOString(),
+                userId
+            };
+            return db.doc(`/users/${newUser.handle}`).set(userCredentials); // returns a write result
+        })
+        .then(() => {
+            res.status(201).json({ token }); // return a status of 201 if successfully written
+        })
+        .catch((err) => {
+            console.error(err);
+            if (err.code === "auth/email-already-in-use"){ // send error code if the email already exists
+                return res.status(400).json({ email: "Email is already in use"});
+            } else {
+                return res.status(500).json({ error: err.code }); // error code anything else
+            }
+        })
+});
+
+
+
 
 // Good practice to have :
 // https://baseurl.com/api/.....
