@@ -23,53 +23,6 @@ exports.helloWorld = fbfunctions.https.onRequest((request, response) => {
  response.send("Hello World!");
 });
 
-////////////////////////////////////////////////////////////////////////////
-//     GET without express
-////////////////////////////////////////////////////////////////////////////
-// get data WITHOUT EXPRESS
-// exports.getScreams = fbfunctions.https.onRequest((req, resp) => {
-    // admin // Can check out more imports from firebase.get-data
-    //     .firestore()
-    //     .collection('screams') // get elements at 'screams' in db
-    //     .get()
-    //     .then((data) => { // promise 
-    //         let screams = []; // initialize array to add screams to it
-    //         data.forEach((doc) => { // Data is a collection of elements, looping thru them all and adding them to an Array
-    //             screams.push(doc.data()); // adding to list
-    //         });
-    //         return resp.json(screams); // respond with array
-    //     })
-    // .catch((err) => console.error(err)); // catch any error and print it
-// });
-////////////////////////////////////////////////////////////////////////////
-//     POST without express
-////////////////////////////////////////////////////////////////////////////
-
-// // create data | will update in real time (post req)
-// exports.createScream = fbfunctions.https.onRequest((req, resp) => {
-//     // catch case that sending get req to link for  post req
-//     if (req.method !== 'POST') {
-//         return resp.status(400).json({ error: 'My guy, you sending a get request to a post method'});
-//     }
-//     const new_Scream = {
-//         body: req.body.body,
-//         userHandle: req.body.userHandle,
-//         createAt: admin.firestore.Timestamp.fromDate(new Date())
-//     };
-
-//     admin
-//         .firestore()
-//         .collection('screams') // like python dictionary, get elements at screams
-//         .add(new_Scream) // takes json obj and adds it to database (one above)
-//         .then(doc => { //returns a promise | If here means weve made a new docs
-//             resp.json({ message: `document ${doc.id} created successfully`}); // respond with when successfully did post req
-//         })
-//         .catch((err) => {
-//             resp.status(500).json({error: 'something went wrong fam'}); // respond a status of 500 and give message (server error)
-//             console.error(err);
-//         });
-// });
-
 
 app.get('/screams', (req, resp) => { 
     db
@@ -91,11 +44,43 @@ app.get('/screams', (req, resp) => {
     .catch((err) => console.error(err)); // catch any error and print it
 })
 
-app.post('/screams', (req, resp) => { // takes in path and handler
+const FBAuth = (req, res, next) => { // NEXT if return it and call it as a function, will procede as a handler (middlewear)
+    let idToken;
+    if (req.headers.authorization && req.headers.authorization.startsWith('Bearer ')) {
+        idToken = req.headers.authorization.split('Bearer ')[1]; // Will return the string split in two into an array
+    } else {
+        console.error('No token found')
+        return resp.status(403).json({ error: 'Unauthorized'})
+    }
+    // We now have a token at this point
+    // Now must verify that this token is initialized by our application
+    admin.auth().verifyIdToken(idToken)
+    .then(decodedToken => {
+        req.user = decodedToken; // Need to get the handle seperately, handle not stored in firebase authentication system, stored in collections
+        console.log(decodedToken);
+        return db.collection('users')
+            .where('userId', '==', req.user.uid)
+            .limit(1) // limits results to 1
+            .get();
+    })
+    .then(data => {
+        req.user.handle = data.docs[0].data().handle; // Grabing the handle object from the collections db
+        return next(); // returning the NEXT() function
+    })
+    .catch(err => {
+        console.error('Error while verifying token ', err);
+        return res.status(403).json(err);
+    })
+}
+
+app.post('/scream', FBAuth,(req, resp) => { // takes in path and handler
+    if (req.body.body.trim() === ""){
+        return res.status(400).json({ body: "Body must not be empty" });
+    }
     // DONT need to catch if sending a get to a post method, express takes care of that
     const new_Scream = {
         body: req.body.body,
-        userHandle: req.body.userHandle,
+        userHandle: req.user.handle, // Since its been added to the request, can just leave it like that (i.e, only need to send a body in post req and we good)
         createAt: new Date().toISOString()
     };
 
