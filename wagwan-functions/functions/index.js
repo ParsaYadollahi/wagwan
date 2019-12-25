@@ -111,6 +111,20 @@ app.post('/screams', (req, resp) => { // takes in path and handler
         });
 })
 
+// Helper function for empty string
+const IsEmpty = (string) => {
+    if (string.trim() === '') return true; // Trim to remove white spaces
+    else return false; 
+}
+
+// Check for valid email
+const IsEmail = (email) => {
+    const emailRegEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (email.match(emailRegEx)) return true;
+    else return false;
+}
+
+
 // SignUp route
 app.post('/signup', (req, res) => {
     const newUser = {
@@ -119,7 +133,30 @@ app.post('/signup', (req, res) => {
         confirmPassword: req.body.confirmPassword,
         handle: req.body.handle,
     };
-    
+
+    let errors = {}
+
+    // Information Validation (dont need to be taking care of no sending anything, since React will send null === "" if nothing is sent)
+    if (IsEmpty(newUser.email)) {
+        errors.email = 'Must not be empty'
+    } else if (!IsEmail(newUser.email)) {
+        errors.email = 'Must be a valid email address'
+    }
+    if (IsEmpty(newUser.password)) {
+        errors.password = "Must not be empty"
+    }
+    if (newUser.password !== newUser.confirmPassword){
+        errors.confirmPassword = "Passwords must match"
+    }
+    if (IsEmpty(newUser.handle)) {
+        errors.handle = "Must not be empty"
+    }
+
+    // Break if errors
+    if (Object.keys(errors).length > 0) return res.status(400).json(errors);
+
+
+
     //TO DO: validate JSON
 
     let token, userId;
@@ -131,7 +168,10 @@ app.post('/signup', (req, res) => {
             } else {
                 return firebase
                     .auth()
-                    .createUserWithEmailAndPassword(newUser.email, newUser.password); // firebase's way for new user account with password
+                    .createUserWithEmailAndPassword(
+                        newUser.email,
+                        newUser.password
+                ); // firebase's way for new user account with password
             }
         })
         .then((data) => { // want to return access token 
@@ -160,9 +200,6 @@ app.post('/signup', (req, res) => {
             }
         })
 });
-
-
-
 
 // Good practice to have :
 // https://baseurl.com/api/.....
