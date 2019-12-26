@@ -1,9 +1,9 @@
-const { admin } = require("./admin");
+const { admin, db } = require("./admin");
 
 module.exports = (req, res, next) => { // NEXT if return it and call it as a function, will procede as a handler (middlewear)
     let idToken;
     if (
-        req.headers.authorization && 
+        req.headers.authorization &&
         req.headers.authorization.startsWith('Bearer ')
     ) {
         idToken = req.headers.authorization.split('Bearer ')[1]; // Will return the string split in two into an array

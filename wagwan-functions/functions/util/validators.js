@@ -1,7 +1,7 @@
 // Helper function for empty string
 const IsEmpty = (string) => {
     if (string.trim() === '') return true; // Trim to remove white spaces
-    else return false; 
+    else return false;
 }
 
 // Check for valid email
@@ -27,7 +27,7 @@ exports.validateSignUpData = (data) => {
         errors.confirmPassword = "Passwords must match"
     }
     if (IsEmpty(data.handle)) {
-        errors.handle = "Must not be empty" 
+        errors.handle = "Must not be empty"
     }
 
     return {
@@ -38,8 +38,8 @@ exports.validateSignUpData = (data) => {
 
 exports.validateLoginData = (data) => {
     let errors = {}
-    if (IsEmpty(user.email)) {errors.email = "Must not be empty"}
-    if (IsEmpty(user.password)) {errors.password = "Must not be empty"}
+    if (IsEmpty(data.email)) {errors.email = "Must not be empty"}
+    if (IsEmpty(data.password)) {errors.password = "Must not be empty"}
 
     return {
         errors,
