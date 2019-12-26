@@ -108,7 +108,7 @@ exports.uploadImage = (req, res) => {
 
     const busboy = new BusBoy({ headers: req.headers });
     busboy.on('file', (fieldname, file, filename, encoding, mimetype) => {
-        if (mimetype !== 'image/jpeg' && mimetype !== 'image/png') {
+        if (mimetype !== 'image/jpeg' && mimetype !== 'image/png') { // If type of image not wanted
             return res.status(400).json( { error: 'Wrong file type submitted'});
         }
 
@@ -136,9 +136,9 @@ exports.uploadImage = (req, res) => {
         .then(() => {
             const imageUrl = `https://firebasestorage.googleapis.com/v0/b/${
                 config.storageBucket
-            }/o/${imageFileName}?alt=media`;
+            }/o/${imageFileName}?alt=media`; // base url to insert image into
             // need to add this url to user document
-            return db.doc(`/users/${req.user.handle}`).update({ imageUrl });
+            return db.doc(`/users/${req.user.handle}`).update({ imageUrl }); // add it to this users image
         })
         .then(() => {
             return res.json({ message: "Image Successfully uploaded"});
