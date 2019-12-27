@@ -6,7 +6,7 @@ const config = require("../util/config");
 const firebase = require("firebase");
 firebase.initializeApp(config);
 
-const { validateSignUpData, validateLoginData } = require("../util/validators");
+const { validateSignUpData, validateLoginData, reduceUserDetails } = require("../util/validators");
 
 exports.signup = (req, res) => {
     const newUser = {
@@ -67,6 +67,8 @@ exports.signup = (req, res) => {
         })
 }
 
+
+// Login user
 exports.login =  (req, res) => {
     const user = {
         email: req.body.email,
@@ -96,7 +98,44 @@ exports.login =  (req, res) => {
         })
 }
 
-// Upload profile pic
+// Add user details
+exports.addUserDetails = (req, res) => {
+    let userDetails = reduceUserDetails(req.body);
+
+    db.doc(`/users/${req.user.handle}`).update(userDetails)
+        .then(() => {
+            return res.json({ message: 'Details added successfully'});
+        })
+        .catch(err => {
+            console.error(err);
+            return res.status(500).json({ error: err.code })
+        })
+}
+// Get user Details
+exports.getAuthenticatedUser = (req, res) => {
+    let resData = {}; // response data (append while going thru promise chain)
+
+    db.doc(`/users/${req.user.handle}`).get()
+        .then((doc => {
+            if (doc.exists) {
+                resData.credentials = doc.data();
+                return db.collection('likes').where('userHandle', '==', req.user.handle).get()
+            }
+        }))
+        .then (data => {
+            resData.likes = []; // Will crash without cuz will get confused with types
+            data.forEach(doc => {
+                resData.likes.push(doc.data());
+            })
+            return res.json(resData);
+        })
+        .catch(err => {
+            console.error(err);
+            return res.status(500).json({ error: err.code});
+        })
+}
+
+// Upload profile pic of user
 exports.uploadImage = (req, res) => {
     const BusBoy = require('busboy');
     const path = require('path');
