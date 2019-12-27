@@ -47,16 +47,17 @@ exports.validateLoginData = (data) => {
     }
 }
 
+// User website validator
 exports.reduceUserDetails = (data) => {
     let userDetails = {};
 
-    if (!IsEmpty(data.bio.trim())){
+    if (!IsEmpty(data.bio.trim())){ // If bio is empty
         userDetails.bio = data.bio;
     }
     if (!IsEmpty(data.website.trim())){
         // https://website.com (want to append https:// at begining of the website if not added by user)
         if (data.website.trim().substring(0, 4) !== 'http'){  // http
-            userDetails.website = `http://${data.website.trim()}`;
+            userDetails.website = `http://${data.website.trim()}`; // append https
         } else {
             userDetails.website = data.website;
         }
