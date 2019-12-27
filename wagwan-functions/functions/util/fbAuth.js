@@ -27,6 +27,7 @@ module.exports = (req, res, next) => { // NEXT if return it and call it as a fun
     })
     .then((data) => {
         req.user.handle = data.docs[0].data().handle; // Grabing the handle object from the collections db
+        req.user.imageUrl = data.docs[0].data().imageUrl; // returns the image of the user
         return next(); // returning the NEXT() function
     })
     .catch((err) => {

@@ -1,11 +1,11 @@
 const { db } = require('../util/admin');
 
-exports.getAllScreams = (req, resp) => { 
+exports.getAllScreams = (req, resp) => {
     db
         .collection('screams') // get elements at 'screams' in db
         .orderBy('createAt', 'desc') // order the output by the keyword "createdat"
         .get()
-        .then((data) => { // promise 
+        .then((data) => { // promise
             let screams = []; // in itialize array to add screams to it
             data.forEach((doc) => { // Data is a collection of elements, looping thru them all and adding them to an Array
                 screams.push({
@@ -41,3 +41,63 @@ exports.postOneScream = (req, resp) => { // takes in path and handler
         console.error(err);
     });
 };
+
+// Fetch Scream
+exports.getScream = (req, res) => {
+    let screamData = {}
+
+    db.doc(`/screams/${req.params.screamId}`).get()
+        .then((doc) => {
+            if (!doc.exists){
+                return res.status(404).json({ error: "Scream not found" }) // In case send request to /scream/id that doesnt exist
+            }
+            screamData = doc.data();
+            // Want to add id of scream
+            screamData.screamId = doc.id;
+            return db
+                .collection ('comments')
+                .orderBy('createdAt', 'desc')
+                .where('screamId', '==', req.params.screamId)
+                .get() // Get the comments with specified id
+        })
+        .then ((data) => {
+            screamData.comments = [];
+            data.forEach((doc) => {
+                screamData.comments.push(doc.data());
+            });
+            return res.json(screamData); // screamdata already json
+        })
+        .catch(err => {
+            console.error(err);
+            res.status(500).json({ error: err.code });
+        })
+}
+
+// Comment on a comment
+exports.commentOnScream = (req, res) => {
+    if (req.body.body.trim() === '') { // Empty comment
+        return res.status(400).json({ error: "Must not be empty" });
+    }
+    const newComment = {
+        body: req.body.body,
+        createdAt: new Date().toISOString(),
+        screamId: req.params.screamId,
+        userHandle: req.user.handle,
+        userImage: req.user.imageUrl,
+    };
+
+    db.doc(`/screams/${req.params.screamId}`).get()
+        .then((doc) => {
+            if(!doc.exists){ // if the screamId doenst exist
+                return res.status(404).json({ error: 'Scream not found' });
+            }
+            return db.collection('comments').add(newComment); // Add comm ent obj to collection comment
+        })
+        .then(() => {
+            res.json(newComment);
+        })
+        .catch(err => {
+            console.error(err);
+            res.status(500).json({ error: "Something went wrong" });
+        })
+}

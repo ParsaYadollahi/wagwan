@@ -118,7 +118,7 @@ exports.getAuthenticatedUser = (req, res) => {
     db.doc(`/users/${req.user.handle}`).get() // Get docs from user with specified name
         .then((doc => {
             if (doc.exists) { // If the mans exists
-                resData.credentials = doc.data(); // Resdata credits key has docs data
+                resData.credentials = doc.data(); // Resdata credits key has docs data (the db schema and info)
                 return db.collection('likes').where('userHandle', '==', req.user.handle).get() // return the likes from the collections
             }
         }))

@@ -3,12 +3,15 @@ const app = require('express')();
 
 const FBAuth = require("./util/fbAuth"); // Security so no anyone can upload to the db
 
-const { getAllScreams, postOneScream } = require("./handlers/screams");
+const { getAllScreams, postOneScream, getScream, commentOnScream} = require("./handlers/screams");
 const { signup, login, uploadImage, addUserDetails, getAuthenticatedUser } = require("./handlers/users");
 
 // Screams routes in screams.js
 app.get('/screams', getAllScreams);
 app.post('/scream', FBAuth, postOneScream);
+app.get('/scream/:screamId', getScream);
+app.post('/scream/:screamId/comment', FBAuth, commentOnScream);
+//TODO: ROUTES (deleteScream, LikeAScream, unlikeAScream, commentOnScream)
 
 // Users Routes in Users.js
 app.post('/signup', signup);
