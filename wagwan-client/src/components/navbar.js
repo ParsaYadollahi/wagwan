@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import Link from 'react-router-dom/Link'
 
 // MUI tings
 import AppBar from '@material-ui/core/AppBar'
@@ -10,6 +9,7 @@ import Button from '@material-ui/core/Button'
 
 export class navbar extends Component {
     render() {
+        const Link = require("react-router-dom").Link; // New import??
         return (
             <AppBar>
                 <Toolbar className="nav-container">
