@@ -90,13 +90,11 @@ exports.login =  (req, res) => {
     })
     .catch(err => {
         console.log(err);
-        if (err.code === "auth/wrong-password") {
-            return res
-            .status(403)
-            .json({ general: 'Wrong Credentials, please try again'}); // If password does not match the user email
-        } else return res.status(500).json({ error: err.code });
-    })
-}
+        return res
+        .status(403)
+        .json({ general: 'Wrong Credentials, please try again'}); // If password does not match the user email
+    });
+};
 
 // Add user details
 exports.addUserDetails = (req, res) => {
@@ -245,7 +243,7 @@ exports.leaveOnRead = (req, res) => {
     let batch = db.batch(); // multip proc
     req.body.forEach(notificationId => {
         const notification = db.doc(`/notifications/${notificationId}`);
-        batch.update(notification, { read: true });
+        batch.update(notification, { read: true }); // modify the specified Notification's ID to read
     });
     batch.commit()
         .then(() => {
