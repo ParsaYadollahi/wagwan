@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import withStyles from "@material-ui/core/styles/withStyles";
+import dayjs from 'dayjs' // format the date
+import relativeTime from 'dayjs/plugin/relativeTime' // relative time lib
 
 // MUI tings
 import Card from '@material-ui/core/Card';
@@ -24,6 +26,7 @@ const styles = {
 
 class Screams extends Component {
     render() {
+        dayjs.extend(relativeTime)
         const Link = require("react-router-dom").Link;
         const { classes,
             scream : {
@@ -40,7 +43,7 @@ class Screams extends Component {
                 <CardMedia
                 image={userImage}
                 title="Profile image" className={classes.image}/>
-                <CardContent class={classes.content}>
+                <CardContent className={classes.content}>
                     <Typography
                     variant="h5"
                     component={Link}
@@ -48,7 +51,7 @@ class Screams extends Component {
                     color='inherit'>
                         {userHandle}
                     </Typography>
-                    <Typography variant="body2" color="textSecondary">{createdAt}</Typography>
+                    <Typography variant="body2" color="textSecondary">{dayjs(createdAt).fromNow()}</Typography>
                     <Typography variant="body1">{body}</Typography>
                 </CardContent>
             </Card>
