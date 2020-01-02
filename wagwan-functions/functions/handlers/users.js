@@ -62,7 +62,7 @@ exports.signup = (req, res) => {
             if (err.code === "auth/email-already-in-use"){ // send error code if the email already exists
                 return res.status(400).json({ email: "Email is already in use"});
             } else {
-                return res.status(500).json({ error: err.code }); // error code anything else
+                return res.status(500).json({ general: "Something went wrong, please try again" }); // error code anything else
             }
         })
 }
@@ -242,7 +242,7 @@ exports.getUserDetails = (req, res) => {
 
 // send an array of id's of notifications that the user has just seen (ones that were just read)
 exports.leaveOnRead = (req, res) => {
-    let batch = db.batch();
+    let batch = db.batch(); // multip proc
     req.body.forEach(notificationId => {
         const notification = db.doc(`/notifications/${notificationId}`);
         batch.update(notification, { read: true });
