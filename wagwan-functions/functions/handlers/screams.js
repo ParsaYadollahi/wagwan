@@ -3,7 +3,7 @@ const { db } = require('../util/admin');
 exports.getAllScreams = (req, resp) => {
     db
         .collection('screams') // get elements at 'screams' in db
-        .orderBy('createAt', 'desc') // order the output by the keyword "createdat"
+        .orderBy('createdAt', 'desc') // order the output by the keyword "createdat"
         .get()
         .then((data) => { // promise
             let screams = []; // in itialize array to add screams to it
@@ -12,7 +12,7 @@ exports.getAllScreams = (req, resp) => {
                     screamId: doc.id,
                     body: doc.data().body,
                     userHandle: doc.data().userHandle,
-                    createAt: doc.data().createAt
+                    createdAt: doc.data().createdAt
                 }); // adding to list
             });
             return resp.json(screams); // respond with array
@@ -28,7 +28,7 @@ exports.postOneScream = (req, resp) => { // takes in path and handler
     const new_Scream = {
         body: req.body.body,
         userHandle: req.user.handle, // Since its been added to the request, can just leave it like that (i.e, only need to send a body in post req and we good)
-        createAt: new Date().toISOString(),
+        createdAt: new Date().toISOString(),
         userImage: req.user.imageUrl,
         likeCount: 0,
         commentCount: 0,
@@ -65,7 +65,7 @@ exports.getScream = (req, res) => {
                 .where('screamId', '==', req.params.screamId)
                 .get() // Get the comments with specified id
         })
-        .then ((data) => {
+        .then((data) => {
             screamData.comments = [];
             data.forEach((doc) => {
                 screamData.comments.push(doc.data());

@@ -26,7 +26,7 @@ exports.signup = (req, res) => {
     db.doc(`/users/${newUser.handle}`)
         .get()
         .then(doc => {
-            if (doc.exists) { // if exist, theres a prob cuz all HANDLES must be unique
+            if (doc.exists) { // if exist, there's a prob cuz all HANDLES must be unique
                 return res.status(400).json({ handle: 'This handle is already taken'}) // return an object error
             } else {
                 return firebase
@@ -49,7 +49,7 @@ exports.signup = (req, res) => {
                 createAt: new Date().toISOString(),
                 imageUrl: `https://firebasestorage.googleapis.com/v0/b/${
                     config.storageBucket
-                }/o/${noImg}?alt=media`,
+                }/o/${noImg}?alt=media`, // Base url for the image
                 userId
             };
             return db.doc(`/users/${newUser.handle}`).set(userCredentials); // returns a write result
@@ -127,7 +127,23 @@ exports.getAuthenticatedUser = (req, res) => {
             data.forEach(doc => {
                 resData.likes.push(doc.data()); // append the likes to the list for each of the users
             })
-            return res.json(resData); // Return likes
+            return db.collection('notifications').where('recipient', '==', req.user.handle)
+                .orderBy('createdAt', 'desc').limit(10).get();
+        })
+        .then((data) => {
+            resData.notifications = [];
+            data.forEach(doc => {
+                resData.notifications.push({
+                    recipient: doc.data().recipient,
+                    sender: doc.data().sender,
+                    createAt: doc.data().createAt,
+                    screamId: doc.data().screamId,
+                    type: doc.data().type,
+                    read: doc.data().read,
+                    notificationId: doc.id,
+                })
+            });
+            return res.json(resData);
         })
         .catch(err => {
             console.error(err);
@@ -189,3 +205,54 @@ exports.uploadImage = (req, res) => {
     });
     busboy.end(req.rawBody);
 };
+
+// Get a User's Details
+exports.getUserDetails = (req, res) => {
+    let userData = {}
+    db.doc(`/users/${req.params.handle}`).get() // Url to get the USER (name of user)
+        .then(doc => { // get the user
+            if (doc.exists) { // If the doc exists (if user exists)
+                userData.user = doc.data(); // Get the user data
+                return db.collection('screams').where('userHandle', '==', req.params.handle) // Get the screams of the specified user
+                    .orderBy('createdAt', 'desc').get(); // Ordered
+            } else { // If it doesnt, return 404 not found
+                return res.status(404).json({ error: 'User not found' });
+            }
+        })
+        .then(data => {
+            userData.screams = []; // initialize a scream to be returned
+            data.forEach(doc => {
+                userData.screams.push({ // Push the data with the Id
+                    body: doc.data().body,
+                    createAt: doc.data().createAt,
+                    userHandle: doc.data().userHandle,
+                    userImage: doc.data().userImage,
+                    likeCount: doc.data().likeCount,
+                    commentCount: doc.data().commentCount,
+                    screamId: doc.id // adds the id
+                })
+            });
+            return res.json(userData); // Returns the data
+        })
+        .catch( err => {
+            console.error(err);
+            return res.status(500).json({ error: err.code });
+        })
+}
+
+// send an array of id's of notifications that the user has just seen (ones that were just read)
+exports.leaveOnRead = (req, res) => {
+    let batch = db.batch();
+    req.body.forEach(notificationId => {
+        const notification = db.doc(`/notifications/${notificationId}`);
+        batch.update(notification, { read: true });
+    });
+    batch.commit()
+        .then(() => {
+            return res.json({ message: 'The notification marked as read' });
+        })
+        .catch(err => {
+            console.error(err);
+            return res.status(500).json({ error: err.code });
+        })
+}
