@@ -11,33 +11,10 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button'
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-const styles = {
-    form: {
-        textAlign: 'center'
-    },
-    image: {
-        height: 60,
-        margin: '20px auto 10px auto'
-    },
-    pageTitle: {
-        margin: '10px auto 10px auto'
-    },
-    TextField: {
-        margin: '10px auto 10px auto'
-    },
-    button: {
-        marginTop: 20,
-        position: 'relative'
-    },
-    LoginError: {
-        color: 'red',
-        fontSize: '12px',
-        marginTop: '10px'
-    },
-    loading: {
-        position: 'absolute'
-    }
-};
+const styles = theme => ({
+    ...theme.spreadThis
+});
+
 
 class login extends Component {
     constructor(){
@@ -60,8 +37,9 @@ class login extends Component {
             password: this.state.password
         }
         axios.post('/login', userData )
-            .then(result => {
-                console.log(result.data);
+            .then(response => {
+                console.log(response.data);
+                localStorage.setItem('FBIdToken', `Bearer ${response.data.token}`);
                 this.setState({ loading: false });
                 this.props.history.push('/'); // push state in url and go to it (redirect to home page)
             })
@@ -87,7 +65,7 @@ class login extends Component {
             <Grid container className={classes.form}>
                 <Grid item sm/>
                 <Grid item sm>
-                    <img src={sixGod} alte="6 mans" className={classes.image} />
+                    <img src={sixGod} alt="6 mans" className={classes.image} />
                     <Typography variant="h2" className={classes.pageTitle}>
                          Login
                     </Typography>
@@ -106,7 +84,7 @@ class login extends Component {
                         <TextField
                             id="password"
                             name="password"
-                            type="mail"
+                            type="password"
                             label="Password"
                             className={classes.TextField}
                             helperText={errors.password} // Display the errors
