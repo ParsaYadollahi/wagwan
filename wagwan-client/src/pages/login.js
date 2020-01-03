@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import PropTypes from 'prop-types'; // Prop types (type checking)
 import sixGod from '../images/6-god.png'
-import axios from 'axios'
 
 // MUI tings
 import Grid from '@material-ui/core/Grid';
@@ -10,6 +9,9 @@ import Typography from "@material-ui/core/Typography";
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button'
 import CircularProgress from '@material-ui/core/CircularProgress';
+// Redux tings
+import { connect } from 'react-redux';
+import { loginUser } from '../redux/actions/userActions'
 
 const styles = theme => ({
     ...theme.spreadThis
@@ -22,34 +24,23 @@ class login extends Component {
         this.state = {
             email: '',
             password: '',
-            loading: false,
             errors: {}
+        }
+    }
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.UI.errors) {
+            this.setState({ errors: nextProps.UI.errors });
         }
     }
 
     handleSubmit = (e) => {
         e.preventDefault();
-        this.setState({
-            loading: true
-        });
         const userData = {
             email: this.state.email,
             password: this.state.password
-        }
-        axios.post('/login', userData )
-            .then(response => {
-                console.log(response.data);
-                localStorage.setItem('FBIdToken', `Bearer ${response.data.token}`);
-                this.setState({ loading: false });
-                this.props.history.push('/'); // push state in url and go to it (redirect to home page)
-            })
-            .catch(err => {
-                this.setState({
-                    errors: err.response.data,
-                    loading: false
-                })
-            })
-    }
+        };
+        this.props.loginUser(userData, this.props.history); // redirects on success
+    };
 
     handleChange = (e) => {
         this.setState({
@@ -58,8 +49,8 @@ class login extends Component {
     }
 
     render() {
-        const { classes } = this.props; // destructutre
-        const { errors, loading } = this.state;
+        const { classes, UI: { loading } } = this.props; // destructutre
+        const { errors } = this.state;
         const Link = require("react-router-dom").Link;
         return (
             <Grid container className={classes.form}>
@@ -119,8 +110,23 @@ class login extends Component {
     }
 }
 
-login.propTypes = {
-    classes: PropTypes.object.isRequired
+login.propTypes = { // All added to props
+    classes: PropTypes.object.isRequired,
+    loginUser: PropTypes.func.isRequired,
+    user: PropTypes.object.isRequired,
+    UI: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(login);
+// Props
+const mapStateToProps = (state) => ({
+    // Access objects from redux state
+    user: state.user,
+    UI: state.UI
+});
+
+const mapActionsToProps = {
+    loginUser
+} // what actions we're going to use
+
+// export component that need access to change Redux state.
+export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(login))
