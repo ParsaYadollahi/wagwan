@@ -2,7 +2,8 @@ import {
     SET_USER,
     SET_ERRORS,
     CLEAR_ERRORS,
-    LOADING_UI
+    LOADING_UI,
+    SET_UNAUTHENTICATED
 } from '../types';
 import axios from 'axios';
 
@@ -11,10 +12,7 @@ export const loginUser = ( userData, history ) => (dispatch) => { // Need dispat
     axios
         .post('/login', userData )
             .then(response => {
-                console.log(response.data);
-                const FBIdToken = `Bearer ${response.data.token}`;
-                localStorage.setItem('FBIdToken', `Bearer ${response.data.token}`);
-                axios.defaults.headers.common['Authorization'] = FBIdToken; // Each request gonna have a header looking like dat
+                setAuthHeader(response.data.token)
 
                 dispatch(getUserData());
                 dispatch({ type: CLEAR_ERRORS }); // If not errors, we can redirect
@@ -28,6 +26,33 @@ export const loginUser = ( userData, history ) => (dispatch) => { // Need dispat
             });
 }
 
+// Almost same as Login
+export const signupUser = ( newUserData, history ) => (dispatch) => { // Need dispatch becuase asynchronous code
+    dispatch({ type: LOADING_UI }); // Link method component to action (newUserData to Loading UI)
+    axios
+        .post('/signup', newUserData )
+            .then(response => {
+                setAuthHeader(response.data.token)
+
+                dispatch(getUserData());
+                dispatch({ type: CLEAR_ERRORS }); // If not errors, we can redirect
+                history.push('/'); // Push state in url and go to it (redirect to home page)
+            })
+            .catch(err => {
+                dispatch({
+                    type: SET_ERRORS,
+                    payload: err.response.data
+                });
+            });
+}
+
+// Log user out
+export const logoutUser = () => (dispatch) => {
+    localStorage.removeItem('FBIdToken'); // Remove token from local storage
+    delete axios.defaults.headers.common['Authorization']; // Delete entry (removes the auth header)
+    dispatch({ type: SET_UNAUTHENTICATED }); // Will clear user state (==> set inital state (empty everything))
+}
+
 export const getUserData = () => (dispatch) => {
     axios
         .get('/user')
@@ -38,4 +63,12 @@ export const getUserData = () => (dispatch) => {
                 })
             })
             .catch(err => console.log(err));
+}
+
+
+const setAuthHeader = (token) => {
+    console.log(token);
+    const FBIdToken = `Bearer ${token}`;
+    localStorage.setItem('FBIdToken', `Bearer ${token}`);
+    axios.defaults.headers.common['Authorization'] = FBIdToken; // Each request gonna have a header looking like dat
 }
