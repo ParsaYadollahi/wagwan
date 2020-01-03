@@ -75,6 +75,16 @@ export const uploadImage = (formData) => (dispatch) => {
             dispatch(getUserData());
         })
         .catch(err => console.log(err));
+};
+
+// ftn that send request to edit details
+export const editUserData = (userData) => (dispatch) => {
+    dispatch({ type: LOADING_USER });
+    axios.post('/user', userData)
+        .then(() => {
+            dispatch(getUserData());
+        })
+        .catch(err => console.log(err));
 }
 
 
