@@ -9,11 +9,13 @@ import Button from '@material-ui/core/Button';
 import Paper  from '@material-ui/core/Paper';
 import MLink from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
 
 // Icons
 import LocationOn from '@material-ui/icons/LocationOn';
-import linkIcon from '@material-ui/icons/Link';
+import LinkIcon from '@material-ui/icons/Link';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
+import EditIcon from '@material-ui/icons/Edit';
 
 
 // Redux
@@ -67,7 +69,16 @@ const styles = (theme) => ({
     }
   });
 
+
+
 class Profile extends Component {
+    handleImageChange = (e) => {
+        const image = e.target.files[0];
+    }
+    handlePictureEdit = () => {
+        const fileInput = document.getElementById('imageInput');
+        fileInput.click();
+    }
     render() {
         const {
             classes,
@@ -83,28 +94,32 @@ class Profile extends Component {
                 <div className={classes.profile}>
                     <div className="image-wrapper">
                         <img src={imageUrl} alt="profile" className="profile-image"/>
-                    </div>
-                    <hr />
+                        <input
+                            type='file'
+                            id='profile_image'
+                            hidden='hidden'
+                            onChange={this.handleImageChange}
+                        />
+                        <IconButton onClick={this.handlePictureEdit} className="button">
+                            <EditIcon color='primary' />
+                        </IconButton>
+                    </div><hr />
                     <div className="profile-details">
             <MLink component={Link} to={`/users/${handle}`} color="primary" variant="h5">
                 @{handle}
-            </MLink>
-            <hr />
-            {bio && <Typography variant="body2">{bio}</Typography>}
-            <hr />
+            </MLink><hr />
+            {bio && <Typography variant="body2">{bio}</Typography>}<hr />
             {location && (
                 <Fragment>
-                    <LocationOn color="primary"/> <span>{location}</span>
-                    <hr />
+                    <LocationOn color="primary"/> <span>{location}</span><hr />
                 </Fragment>
             )}
             {website && (
                 <Fragment>
-                    <linkIcon color="primary" />
+                    <LinkIcon color="primary" />
                         <a href={website} target="_blank" rel="noopener noreferrer">
                             {' '}{website}
-                        </a>
-                        <hr />
+                        </a><hr />
                 </Fragment>
             )}
             <CalendarTodayIcon color="primary" />{' '}
