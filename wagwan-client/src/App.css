@@ -25,3 +25,10 @@ body {
 a {
   text-decoration: none;
 }
+
+.nav-container {
+  margin: auto;
+}
+.nav-container svg {
+  color: #ffffff;
+}

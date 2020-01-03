@@ -4,14 +4,13 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 import EditDetails from './EditDetails';
+import CustomBotton from '../util/CustomBotton';
 
 // MUI tings
 import Button from '@material-ui/core/Button';
 import Paper  from '@material-ui/core/Paper';
 import MLink from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import Tooltip from '@material-ui/core/Tooltip';
 
 // Icons
 import LocationOn from '@material-ui/icons/LocationOn';
@@ -110,11 +109,14 @@ class Profile extends Component {
                             hidden='hidden'
                             onChange={this.handleImageChange}
                         />
-                        <Tooltip title='Edit Profile picture' placement="bottom">
-                          <IconButton onClick={this.handlePictureEdit} className="button">
-                              <EditIcon color='primary' />
-                          </IconButton>
-                        </Tooltip>
+
+                        <CustomBotton
+                          tip='Edit Profile Picture'
+                          onClick={this.handlePictureEdit}
+                          btnClassName='button'>
+                            <EditIcon color="primary"  />
+                        </CustomBotton>
+
                     </div><hr />
                     <div className="profile-details">
             <MLink component={Link} to={`/users/${handle}`} color="primary" variant="h5">
@@ -138,11 +140,11 @@ class Profile extends Component {
             <span>Joined {dayjs(createAt).format('MMM YYYY')}</span>
                     </div>
 
-                <Tooltip title="Logout" placement="top">
-                  <IconButton onClick={this.handleLogout}>
-                    <KeyboardReturn color="primary" />
-                  </IconButton>
-                </Tooltip>
+                <CustomBotton tip='Logout'
+                          onClick={this.handleLogout}>
+                            <KeyboardReturn color="primary"  />
+                </CustomBotton>
+
                 <EditDetails />
                 </div>
             </Paper>
