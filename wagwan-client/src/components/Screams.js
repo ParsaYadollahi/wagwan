@@ -4,6 +4,7 @@ import dayjs from 'dayjs' // format the date
 import relativeTime from 'dayjs/plugin/relativeTime' // relative time lib
 import PropTypes from 'prop-types';
 import CustomButton from '../util/CustomBotton';
+import DeleteScream from './DeleteScream';
 
 
 // MUI tings
@@ -26,6 +27,7 @@ import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
 
 const styles = {
     card: {
+        position: 'relative',
         marginBottom: 20,
         display: 'flex'
     },
@@ -70,7 +72,10 @@ class Screams extends Component {
                 likeCount,
                 commentCount
             },
-            user: { authenticated }
+            user: {
+                authenticated,
+                credentials: { handle }
+            }
         } = this.props; // destrcuture classes
             const likeButton = !authenticated ? ( // Not logged in
                 <CustomButton tip='Like'>
@@ -87,6 +92,9 @@ class Screams extends Component {
                         <FavoriteBorder color="primary" />
                     </CustomButton>
                 );
+        const deleteButton = authenticated && userHandle === handle ? (
+            <DeleteScream screamId={screamId} /> // If the post is the users, allow delete possibility
+        ) : null
         return (
             <Card className={classes.card}>
                 <CardMedia
@@ -100,8 +108,13 @@ class Screams extends Component {
                     color='inherit'>
                         {userHandle}
                     </Typography>
-                    <Typography variant="body2" color="textSecondary">{dayjs(createdAt).fromNow()}</Typography>
-                    <Typography variant="body1">{body}</Typography>
+                    {deleteButton}
+                    <Typography variant="body2" color="textSecondary">
+                        {dayjs(createdAt).fromNow()}
+                    </Typography>
+                    <Typography variant="body1">
+                        {body}
+                    </Typography>
                     {likeButton}
                         <span>{likeCount} Likes</span>
                         <CustomButton tip="Comment">
