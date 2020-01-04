@@ -22,7 +22,8 @@ const styles = theme => ({
     ...theme.spreadThis,
     submitButton: {
         position: 'relative',
-        margin: '10px auto 5px auto'
+        margin: '10px auto 5px auto',
+        float: "right"
     },
     progrssSpinner: {
         position: 'absolute'
@@ -49,7 +50,7 @@ class PostScream extends Component {
         };
         if (!nextProps.UI.errors && !nextProps.UI.loading) {
             this.setState({ body: '' }); // remove the text when submitted
-            this.handleClose(); // close the box when done
+            this.handleClose(); // close the box when
         }
     }
     handleOpen = () => {
@@ -85,7 +86,7 @@ class PostScream extends Component {
                                 <CloseIcon />
                         </CustomButton>
                         <DialogContent>
-                            <DialogTitle>What's on your mind?</DialogTitle>
+                            <DialogTitle style={{ paddingLeft: "0px" }}>What's on your mind?</DialogTitle>
                             <form onSubmit={this.handleSubmit}>
                                 <TextField
                                     name='body'
