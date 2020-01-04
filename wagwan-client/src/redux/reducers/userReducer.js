@@ -5,7 +5,9 @@ import {
     LOADING_UI,
     SET_AUTHENTICATED,
     SET_UNAUTHENTICATED,
-    LOADING_USER
+    LOADING_USER,
+    LIKE_SCREAM,
+    UNLIKE_SCREAM
 } from '../types';
 
 const initialState = { // userReducer
@@ -36,6 +38,22 @@ export default function(state = initialState, action) { // Takes action and init
                 return {
                     ...state,
                     loading: true
+                };
+            case LIKE_SCREAM:
+                return {
+                    ...state,
+                    likes: [
+                        ...state.likes,
+                        { // add new like
+                            userHandle: state.credentials.handle,
+                            screamId: action.payload.screamId
+                        }
+                    ]
+                }
+            case UNLIKE_SCREAM:
+                return { // remove the like and user
+                    ...state,
+                    likes: state.likes.filter(like => like.screamId !== action.payload.screamId)
                 }
                 default:
                     return state;
