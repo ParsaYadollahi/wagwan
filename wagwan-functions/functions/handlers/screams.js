@@ -24,8 +24,8 @@ exports.getAllScreams = (req, resp) => {
 };
 
 exports.postOneScream = (req, resp) => { // takes in path and handler
-    if (req.body.body.trim() === ""){
-        return res.status(400).json({ body: "Body must not be empty" });
+    if (req.body.body.trim() === ''){
+        return resp.status(400).json({ body: "Body must not be empty" });
     }
     // DONT need to catch if sending a get to a post method, express takes care of that
     const new_Scream = {
