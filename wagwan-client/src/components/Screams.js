@@ -5,6 +5,7 @@ import relativeTime from 'dayjs/plugin/relativeTime' // relative time lib
 import PropTypes from 'prop-types';
 import CustomButton from '../util/CustomBotton';
 import DeleteScream from './DeleteScream';
+import ScreamDialogue from './screamDialog';
 
 
 // MUI tings
@@ -121,6 +122,9 @@ class Screams extends Component {
                             <ChatIcon color="primary" />
                         </CustomButton>
                         <span>{commentCount} comments</span>
+                        <ScreamDialogue
+                            screamId={screamId}
+                            userHandle={userHandle} />
                 </CardContent>
             </Card>
         )

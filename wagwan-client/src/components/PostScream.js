@@ -5,7 +5,7 @@ import CustomButton from '../util/CustomBotton';
 
 // Redux tings
 import { connect } from 'react-redux';
-import { postScream } from '../redux/actions/dataActions';
+import { postScream, clearErrors } from '../redux/actions/dataActions';
 
 // MUI tings
 import Button from '@material-ui/core/Button';
@@ -22,7 +22,7 @@ const styles = theme => ({
     ...theme.spreadThis,
     submitButton: {
         position: 'relative',
-        margin: '10px auto 5px auto',
+        margin: '20px auto 10px auto',
         float: "right"
     },
     progrssSpinner: {
@@ -49,15 +49,15 @@ class PostScream extends Component {
             });
         };
         if (!nextProps.UI.errors && !nextProps.UI.loading) {
-            this.setState({ body: '' }); // remove the text when submitted
-            this.handleClose(); // close the box when
+            this.setState({ body: '', open: false, errors: {} }); // remove the text when submitted
         }
     }
     handleOpen = () => {
         this.setState({ open: true })
     };
     handleClose = () => {
-        this.setState({ open: false, errors: '' }) // Clear the errors once closed
+        this.props.clearErrors();
+        this.setState({ open: false, errors: {} }) // Clear the errors once closed
     };
     handleChange = (e) => {
         this.setState({ [e.target.name]: e.target.value })
@@ -124,6 +124,7 @@ class PostScream extends Component {
 
 PostScream.Prototype = {
     postScream: PropTypes.func.isRequired,
+    clearErrors: PropTypes.func.isRequired,
     UI: PropTypes.object.isRequired
 };
 
@@ -131,4 +132,4 @@ const mapStateToProps = (state) => ({
     UI: state.UI
 })
 
-export default connect(mapStateToProps, { postScream })(withStyles(styles)(PostScream));
+export default connect(mapStateToProps, { postScream, clearErrors })(withStyles(styles)(PostScream));

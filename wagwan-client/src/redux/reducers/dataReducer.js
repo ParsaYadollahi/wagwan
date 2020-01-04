@@ -4,7 +4,8 @@ import {
     UNLIKE_SCREAM,
     LOADING_DATA,
     POST_SCREAM,
-    DELETE_SCREAM
+    DELETE_SCREAM,
+    SET_SCREAM
 } from '../types';
 
 const initialState = {
@@ -49,7 +50,12 @@ export default function(state = initialState, action){
                     action.payload, // add new screams to top
                     ...state.screams // spread the old screams
                 ]
-            }
+            };
+        case SET_SCREAM:
+            return {
+                ...state,
+                scream: action.payload
+            };
         default:
             return state;
 
