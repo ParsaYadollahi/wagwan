@@ -3,6 +3,7 @@ import {
     LIKE_SCREAM,
     UNLIKE_SCREAM,
     LOADING_DATA,
+    POST_SCREAM,
     DELETE_SCREAM
 } from '../types';
 
@@ -40,6 +41,15 @@ export default function(state = initialState, action){
             return {
                 ...state
             };
+        case POST_SCREAM:
+            // need to add it to screams array
+            return {
+                ...state,
+                screams: [
+                    action.payload, // add new screams to top
+                    ...state.screams // spread the old screams
+                ]
+            }
         default:
             return state;
 

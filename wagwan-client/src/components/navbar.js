@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import CustomBotton from '../util/CustomBotton'
+import PostScream from './PostScream';
 
 // MUI tings
 import AppBar from '@material-ui/core/AppBar';
@@ -24,9 +25,7 @@ export class navbar extends Component {
                 <Toolbar className="nav-container">
                     {authenticated ? (
                         <Fragment>
-                            <CustomBotton tip="Create a Post">
-                                <AddIcon />
-                            </CustomBotton>
+                            <PostScream />
                             <CustomBotton tip="Home" component={Link} to="/" >
                                 <HomeIcon/>
                             </CustomBotton>

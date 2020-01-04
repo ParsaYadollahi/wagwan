@@ -47,7 +47,7 @@ class DeleteScream extends Component {
                     tip="Delete Post"
                     onClick={this.handleOpen}
                     btnClassName={classes.deleteButton}>
-                        <DeleteOutline color="secondary" />
+                        <DeleteOutline style={{ color: "#e57373" }} />
                 </CustomButton>
                 <Dialog
                     open={this.state.open}
