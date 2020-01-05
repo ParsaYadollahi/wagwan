@@ -1,11 +1,11 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
-import CustomButton from '../util/CustomBotton';
+import CustomButton from '../../util/CustomBotton';
 
 // Redux tings
 import { connect } from 'react-redux';
-import { editUserData } from '../redux/actions/userActions';
+import { editUserData } from '../../redux/actions/userActions';
 
 // MUI tings
 import Button from '@material-ui/core/Button';

@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
-import CustomBotton from '../util/CustomBotton'
-import PostScream from './PostScream';
+import CustomBotton from '../../util/CustomBotton'
+import PostScream from '../Scream/PostScream';
 
 // MUI tings
 import AppBar from '@material-ui/core/AppBar';

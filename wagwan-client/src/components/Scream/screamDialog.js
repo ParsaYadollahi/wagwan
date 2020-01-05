@@ -1,16 +1,16 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
-import CustomButton from '../util/CustomBotton';
+import CustomButton from '../../util/CustomBotton';
 import dayjs from 'dayjs';
 import { Link } from 'react-router-dom';
-import LikeButton from './LikeButton'
+import LikeButton from '../Profile/LikeButton'
+import Comments from './Comments';
 
 
 // MUI tings
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -23,7 +23,7 @@ import ChatIcon from '@material-ui/icons/Chat';
 
 // Redux tings
 import { connect } from 'react-redux';
-import { getScream } from '../redux/actions/dataActions';
+import { getScream } from '../../redux/actions/dataActions';
 
 const styles = theme => ({
     ...theme.spreadThis,
@@ -72,13 +72,14 @@ class ScreamDialog extends Component {
         const { classes,
             scream: {
                 screamId,
-                scream:
+                scream,
                 body,
                 createdAt,
                 likeCount,
                 commentCount,
                 userImage,
-                userHandle
+                userHandle,
+                comments // array of comments
             },
             UI: { loading }
         } = this.props
@@ -109,7 +110,7 @@ class ScreamDialog extends Component {
                     </Typography>
                     <hr className={classes.invisibleSep} />
                     <Typography variant='body1'>
-                        {body}
+                        <span>{body}</span>
                     </Typography>
                     <LikeButton screamId={screamId} />
                     <span>{likeCount} Likes</span>
@@ -118,6 +119,8 @@ class ScreamDialog extends Component {
                     </CustomButton>
                     <span>{commentCount} comments</span>
                 </Grid>
+                <hr className={classes.visibleSep} />
+                <Comments comments={comments} />
             </Grid>
         )
 
@@ -149,7 +152,7 @@ class ScreamDialog extends Component {
 
 }
 
-ScreamDialog.prototypes = {
+ScreamDialog.propTypes = {
     getScream: PropTypes.func.isRequired,
     screamId: PropTypes.string.isRequired,
     userHandle: PropTypes.string.isRequired,

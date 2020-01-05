@@ -3,10 +3,10 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import dayjs from 'dayjs' // format the date
 import relativeTime from 'dayjs/plugin/relativeTime' // relative time lib
 import PropTypes from 'prop-types';
-import CustomButton from '../util/CustomBotton';
+import CustomButton from '../../util/CustomBotton';
 import DeleteScream from './DeleteScream';
 import ScreamDialogue from './screamDialog';
-import LikeButton from './LikeButton';
+import LikeButton from '../Profile/LikeButton';
 
 // MUI tings
 import Card from '@material-ui/core/Card';
