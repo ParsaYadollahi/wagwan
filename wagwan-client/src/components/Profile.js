@@ -149,7 +149,7 @@ class Profile extends Component {
                 </div>
             </Paper>
         ) : (
-            <Paper classNAme={classes.paper}>
+            <Paper className={classes.paper}>
                 <Typography variant="body2" align="center" >
                     No profile Found, Try again
                 </Typography>

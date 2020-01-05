@@ -32,6 +32,10 @@ export default function(state = initialState, action){
             // Add like to array of user like and increment like
             let index = state.screams.findIndex((scream) => scream.screamId === action.payload.screamId); // screamId same as payload
             state.screams[index] = action.payload; // replace it in the state
+            // check scream stored in singular scream obj has same Id, liked the scream opened
+            if (state.scream.screamId === action.payload.screamId) {
+                state.scream = action.payload;
+            }
             return {
                 ...state
             };

@@ -16,7 +16,7 @@ import HomeIcon from '@material-ui/icons/Home';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 
 
-export class navbar extends Component {
+export class Navbar extends Component {
     render() {
         const authenticated = this.props
         const Link = require("react-router-dom").Link; // New import??
@@ -46,7 +46,7 @@ export class navbar extends Component {
     }
 }
 
-navbar.propTypes = {
+Navbar.propTypes = {
     authenticated: PropTypes.bool.isRequired
 }
 
@@ -54,4 +54,4 @@ const mapStateToProps = state => ({
     authenticated: state.user.authenticated
 })
 
-export default navbar
+export default Navbar

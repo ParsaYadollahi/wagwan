@@ -77,8 +77,7 @@ class PostScream extends Component {
                 <Dialog
                     open={this.state.open}
                     onClose={this.handleClose}
-                    fullWidth
-                    minWidth='sm'>
+                    fullWidth>
                         <CustomButton
                             tip='Close'
                             onClick={this.handleClose}

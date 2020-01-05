@@ -4,6 +4,8 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import CustomButton from '../util/CustomBotton';
 import dayjs from 'dayjs';
 import { Link } from 'react-router-dom';
+import LikeButton from './LikeButton'
+
 
 // MUI tings
 import Dialog from '@material-ui/core/Dialog';
@@ -16,6 +18,7 @@ import Typography from '@material-ui/core/Typography';
 // Icons
 import CloseIcon from '@material-ui/icons/Close';
 import UnfoldMore from '@material-ui/icons/UnfoldMore';
+import ChatIcon from '@material-ui/icons/Chat';
 
 
 // Redux tings
@@ -68,8 +71,8 @@ class ScreamDialog extends Component {
     render() {
         const { classes,
             scream: {
-                scream:
                 screamId,
+                scream:
                 body,
                 createdAt,
                 likeCount,
@@ -81,11 +84,12 @@ class ScreamDialog extends Component {
         } = this.props
 
         const dialogMarkUp = loading ? (
+            // Spinner
             <div className={classes.spinner}>
                 <CircularProgress size={200} thickness={2}/>
             </div>
         ) : (
-            <Grid container spacing={16}>
+            <Grid container spacing={1}>
                 <Grid item sm={5}>
                     <img src={userImage} alt ="Profile" className={classes.profileImage}/>
                 </Grid>
@@ -107,6 +111,12 @@ class ScreamDialog extends Component {
                     <Typography variant='body1'>
                         {body}
                     </Typography>
+                    <LikeButton screamId={screamId} />
+                    <span>{likeCount} Likes</span>
+                    <CustomButton tip="Comments">
+                        <ChatIcon color="primary" />
+                    </CustomButton>
+                    <span>{commentCount} comments</span>
                 </Grid>
             </Grid>
         )
@@ -122,8 +132,7 @@ class ScreamDialog extends Component {
             <Dialog
                 open={this.state.open}
                 onClose={this.handleClose}
-                fullWidth
-                minWidth='sm'>
+                fullWidth>
                     <CustomButton
                         tip='Close'
                         onClick={this.handleClose}
@@ -140,7 +149,7 @@ class ScreamDialog extends Component {
 
 }
 
-ScreamDialog.Prototype = {
+ScreamDialog.prototypes = {
     getScream: PropTypes.func.isRequired,
     screamId: PropTypes.string.isRequired,
     userHandle: PropTypes.string.isRequired,
