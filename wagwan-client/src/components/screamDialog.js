@@ -40,6 +40,16 @@ const styles = theme => ({
     closeButton: {
         position: 'absolute',
         left: '90%'
+    },
+    expandButton: {
+        position: 'absolute',
+        left: '90%'
+    },
+    spinner: {
+        textAlign: 'center',
+        marginTop: 50,
+        marginBottom: 50,
+
     }
 });
 
@@ -71,7 +81,9 @@ class ScreamDialog extends Component {
         } = this.props
 
         const dialogMarkUp = loading ? (
-            <CircularProgress size={200} />
+            <div className={classes.spinner}>
+                <CircularProgress size={200} thickness={2}/>
+            </div>
         ) : (
             <Grid container spacing={16}>
                 <Grid item sm={5}>
