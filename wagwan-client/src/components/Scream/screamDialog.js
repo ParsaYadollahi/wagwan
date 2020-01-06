@@ -122,7 +122,7 @@ class ScreamDialog extends Component {
                 <hr className={classes.visibleSep} />
                 <Comments comments={comments} />
             </Grid>
-        )
+        );
 
     return (
         <Fragment>

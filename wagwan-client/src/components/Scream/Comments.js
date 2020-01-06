@@ -9,7 +9,16 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
 const styles = theme => ({
-    ...theme.spreadThis
+    ...theme.spreadThis,
+    commentImage: {
+        maxWidth: '100%',
+        height: 100,
+        objectFit: 'cover',
+        borderRadius: '50%'
+    },
+    commentData: {
+        marginLeft: 20
+    }
 });
 
 class Comments extends Component {
@@ -17,15 +26,14 @@ class Comments extends Component {
         const { comments, classes } = this.props;
         return (
             <Grid container>
-                {/* Loop thru each of the comments */}
-                {comments.map((comment) => {
+                {comments.map((comment, index) => {
                     const { body ,createdAt, userImage, userHandle} = comment;
                     return (
                         <Fragment key={createdAt}>
                             <Grid item sm={12}>
                                 <Grid container>
                                     <Grid item sm={2}>
-                                        <im src={userImage} alt="comment" className={classes.commentImage} />
+                                        <img src={userImage} alt="comment" className={classes.commentImage} />
                                     </Grid>
                                     <Grid item sm={9}>
                                         <div className={classes.commentData}>
@@ -36,7 +44,7 @@ class Comments extends Component {
                                                 color="primary">
                                                     {userHandle}
                                             </Typography>
-                                            <Typography variant="body2" color="secondary">
+                                            <Typography variant="body2" color="textSecondary">
                                                 {dayjs(createdAt).format('h:mm a, MMMM DD YYYY')}
                                             </Typography>
                                             <hr className={classes.invisibleSep} />
@@ -45,7 +53,9 @@ class Comments extends Component {
                                     </Grid>
                                 </Grid>
                             </Grid>
-                            <hr className={classes.visibleSep} />
+                            {index !== comments.length -1 && ( // Dont add line below last comment
+                                <hr className={classes.visibleSep} />
+                            )}
                         </Fragment>
                     )
                 })}
@@ -57,7 +67,6 @@ class Comments extends Component {
 
 Comments.propTypes = {
     comments: PropTypes.array.isRequired
-}
-
+};
 
 export default withStyles(styles)(Comments);
