@@ -20,37 +20,37 @@ export default {
     spreadThis: {
       form: {
         textAlign: 'center'
-    },
-    image: {
-        height: 60,
-        margin: '20px auto 10px auto'
-    },
-    pageTitle: {
-        margin: '10px auto 10px auto'
-    },
-    TextField: {
-        margin: '10px auto 10px auto'
-    },
-    button: {
-        marginTop: 20,
-        position: 'relative'
-    },
-    LoginError: {
-        color: 'red',
-        fontSize: '12px',
-        marginTop: '10px'
-    },
-    loading: {
-        position: 'absolute'
-    },
-    invisibleSep: {
-      border: 'none',
-      margin: 4
-    },
-    visibleSep: {
-      width: '100%',
-      borderBottom: '1px solid rgba(0,0,0,0,0.1)',
-      marginBottom: '5px'
-    }
+      },
+      image: {
+          height: 60,
+          margin: '20px auto 10px auto'
+      },
+      pageTitle: {
+          margin: '10px auto 10px auto'
+      },
+      TextField: {
+          margin: '10px auto 10px auto'
+      },
+      button: {
+          marginTop: 20,
+          position: 'relative'
+      },
+      LoginError: {
+          color: 'red',
+          fontSize: '12px',
+          marginTop: '10px'
+      },
+      loading: {
+          position: 'absolute'
+      },
+      invisibleSep: {
+        border: 'none',
+        margin: 4
+      },
+      visibleSep: {
+        width: '100%',
+        borderBottom: '1px solid rgba(0,0,0,0,0.1)',
+        marginBottom: '5px'
+      }
     }
   }
