@@ -27,19 +27,19 @@ class home extends Component {
                     {recentScreamsMarkup}
                 </Grid>
                 <Grid item sm={4} xs={12}>
-                    <Profile></Profile>
+                    <Profile />
                 </Grid>
             </Grid>
-        )
+        );
     }
 }
 
-home.Prototype = {
+home.propTypes = {
     getScreams: PropTypes.func.isRequired,
     data: PropTypes.object.isRequired
 }
 
-const mapStateToProps = state => ({ // data reducer puts data in the obj
+const mapStateToProps = (state) => ({ // data reducer puts data in the obj
     data: state.data
 })
 

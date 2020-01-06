@@ -14,21 +14,22 @@ import { Tooltip, IconButton, Icon } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import HomeIcon from '@material-ui/icons/Home';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-
+import { Link } from 'react-router-dom';
 
 export class Navbar extends Component {
     render() {
         const authenticated = this.props
-        const Link = require("react-router-dom").Link; // New import??
         return (
             <AppBar>
                 <Toolbar className="nav-container">
                     {authenticated ? (
                         <Fragment>
                             <PostScream />
-                            <CustomBotton tip="Home" component={Link} to="/" >
-                                <HomeIcon/>
-                            </CustomBotton>
+                            <Link to="/">
+                                <CustomBotton tip="Home">
+                                    <HomeIcon />
+                                </CustomBotton>
+                            </Link>
                             <CustomBotton tip="Notifications">
                                 <NotificationsIcon />
                             </CustomBotton>
