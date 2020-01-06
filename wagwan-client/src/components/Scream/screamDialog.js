@@ -60,14 +60,42 @@ const styles = theme => ({
 class ScreamDialog extends Component {
     state = {
         open: false,
+        oldPath: '',
+        newPAth: ''
     };
     handleOpen = () => {
         this.setState({ open: true })
         this.props.getScream(this.props.screamId); // when open post, need to send req to server to get scream
     };
-    handleClose = () => {
-        this.setState({ open: false });
-        this.props.clearErrors();
+
+    componentDidMount() {
+        if (this.props.openDialog) {
+          this.handleOpen();
+        }
+    }
+    handleOpen = () => { // Create a new path when opening a post
+        let oldPath = window.location.pathname;
+        const { userHandle, screamId } = this.props;
+        const newPath = `/users/${userHandle}/scream/${screamId}`;
+
+        if (oldPath === newPath) {
+            oldPath = `/users/${userHandle}`; // changes the url
+        }
+
+        if (oldPath === newPath) {
+            oldPath = `/users/${userHandle}`;
+        }
+        window.history.pushState(null, null, newPath);
+
+        this.setState({ open: true, oldPath, newPath });
+        this.props.getScream(this.props.screamId);
+
+    };
+
+  handleClose = () => {
+    window.history.pushState(null, null, this.state.oldPath); // change the path back to "/"
+    this.setState({ open: false });
+    this.props.clearErrors();
     };
 
     render() {
