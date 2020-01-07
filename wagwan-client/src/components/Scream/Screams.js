@@ -7,6 +7,8 @@ import CustomButton from '../../util/CustomBotton';
 import DeleteScream from './DeleteScream';
 import ScreamDialog from './screamDialog';
 import LikeButton from '../Profile/LikeButton';
+import { Link } from 'react-router-dom';
+
 
 // MUI tings
 import Card from '@material-ui/core/Card';
@@ -85,9 +87,11 @@ class Screams extends Component {
                     </Typography>
                     <LikeButton screamId={screamId} />
                     <span>{likeCount} Likes</span>
-                    <CustomButton tip="Comments">
-                        <ChatIcon color="primary" />
-                    </CustomButton>
+                    <Link to={`/users/${userHandle}/scream/${screamId}`}>
+                        <CustomButton tip="Comments">
+                            <ChatIcon color="primary" />
+                        </CustomButton>
+                    </Link>
                     <span>{commentCount} comments</span>
                     <ScreamDialog
                         screamId={screamId}

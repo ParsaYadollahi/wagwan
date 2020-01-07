@@ -22,18 +22,25 @@ const styles = theme => ({
 });
 
 class Comments extends Component {
-    render(){
-        const { comments, classes } = this.props;
-        return (
-            <Grid container>
-                {comments.map((comment, index) => {
-                    const { body, createdAt, userImage, userHandle } = comment;
-                    return (
-                        <Fragment key={createdAt}>
-                            <Grid item sm={12}>
-                                <Grid container>
-                                    <Grid item sm={2}>
-                                        <img src={userImage} alt="comment" className={classes.commentImage} />
+    render() {
+      const { comments, classes } = this.props;
+      return (
+        <Grid container>
+          {comments.map((comment, index) => {
+            const { body,
+                createdAt,
+                userImage,
+                userHandle
+            } = comment;
+                return (
+                    <Fragment key={createdAt}>
+                        <Grid item sm={12}>
+                        <Grid container>
+                            <Grid item sm={2}>
+                            <img
+                                src={userImage}
+                                alt="comment"
+                                className={classes.commentImage}/>
                                     </Grid>
                                     <Grid item sm={9}>
                                         <div className={classes.commentData}>
