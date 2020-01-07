@@ -4,6 +4,10 @@ const { db } = require('./util/admin');
 
 const FBAuth = require("./util/fbAuth"); // Security so no anyone can upload to the db
 
+// Need to deploy to live server
+const cors = require('cors');
+app.use(cors());
+
 const {
     getAllScreams,
     postOneScream,

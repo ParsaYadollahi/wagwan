@@ -25,6 +25,8 @@ import axios from 'axios';
 
 const theme = createMuiTheme(themeFile);
 
+axios.defaults.baseURL = "https://us-central1-wagwan-6797c.cloudfunctions.net/api";
+
 // Get token
 let authenticated;
 const token = localStorage.FBIdToken;
