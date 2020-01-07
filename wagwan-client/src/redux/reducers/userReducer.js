@@ -7,7 +7,8 @@ import {
     SET_UNAUTHENTICATED,
     LOADING_USER,
     LIKE_SCREAM,
-    UNLIKE_SCREAM
+    UNLIKE_SCREAM,
+    MARK_NOTIFICATIONS
 } from '../types';
 
 const initialState = { // userReducer
@@ -55,6 +56,12 @@ export default function(state = initialState, action) { // Takes action and init
                     ...state,
                     likes: state.likes.filter(like => like.screamId !== action.payload.screamId)
                 }
+            case MARK_NOTIFICATIONS:
+                state.notifications.forEach(not => not.read = true);
+                return {
+                    ...state
+                }
+
                 default:
                     return state;
     }

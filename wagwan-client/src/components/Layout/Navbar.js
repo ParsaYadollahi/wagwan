@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import CustomBotton from '../../util/CustomBotton'
 import PostScream from '../Scream/PostScream';
+import Notifications from './Notifications';
 
 // MUI tings
 import AppBar from '@material-ui/core/AppBar';
@@ -13,7 +14,6 @@ import { Tooltip, IconButton, Icon } from '@material-ui/core';
 // Icons
 import AddIcon from '@material-ui/icons/Add';
 import HomeIcon from '@material-ui/icons/Home';
-import NotificationsIcon from '@material-ui/icons/Notifications';
 import { Link } from 'react-router-dom';
 
 export class Navbar extends Component {
@@ -30,9 +30,7 @@ export class Navbar extends Component {
                                     <HomeIcon />
                                 </CustomBotton>
                             </Link>
-                            <CustomBotton tip="Notifications">
-                                <NotificationsIcon />
-                            </CustomBotton>
+                            <Notifications />
                         </Fragment>
                     ) : (
                         <Fragment>
