@@ -42,7 +42,7 @@ class PostScream extends Component {
         body: '',
         errors: {}
     };
-    componentWillReceiveProps(nextProps) {
+    getDerivedStateFromProps(nextProps) {
         if (nextProps.UI.errors) {
             this.setState({
                 errors: nextProps.UI.errors

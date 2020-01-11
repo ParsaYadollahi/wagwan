@@ -3,8 +3,9 @@ import{ BrowserRouter as Router , Switch, Route } from 'react-router-dom';
 import './App.css';
 import { ThemeProvider as MuiThemeProvider } from '@material-ui/core/styles';
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
-import themeFile from './util/theme';
 import jwtDecode from 'jwt-decode';
+import axios from 'axios';
+
 
 // Redux
 import { Provider } from 'react-redux'
@@ -14,28 +15,28 @@ import { logoutUser, getUserData } from './redux/actions/userActions';
 
 // Components
 import NavBar from './components/Layout/Navbar';
-import AuthRoute from './util/AuthRoute'
+import AuthRoute from './util/AuthRoute';
+import themeFile from './util/theme';
+
 
 //Pages
 import home from './pages/home';
 import login from './pages/login';
 import signup from './pages/signup';
 import user from './pages/users';
-import axios from 'axios';
 
 const theme = createMuiTheme(themeFile);
 
 axios.defaults.baseURL = "https://us-central1-wagwan-6797c.cloudfunctions.net/api";
 
 // Get token
-let authenticated;
+
 const token = localStorage.FBIdToken;
 if (token){
   const decodedToken = jwtDecode(token);
   if (decodedToken.exp * 1000 < Date.now()) { // The token expired (in seconds)
     store.dispatch(logoutUser()); // Will remove token and logout
     window.location.href = '/login'; // go back to login page
-    authenticated = false;
   } else {
     store.dispatch({ type: SET_AUTHENTICATED });
     axios.defaults.headers.common['Authorization'] = token;

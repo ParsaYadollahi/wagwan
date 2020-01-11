@@ -102,7 +102,6 @@ class ScreamDialog extends Component {
         const { classes,
             scream: {
                 screamId,
-                scream,
                 body,
                 createdAt,
                 likeCount,

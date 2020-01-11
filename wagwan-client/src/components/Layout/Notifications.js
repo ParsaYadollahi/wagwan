@@ -28,36 +28,41 @@ class Notifications extends Component {
 
     handleOpen= (e) => {
         this.setState({
-            anchorEl: e.target
+            anchorEl: e.target // menu = object
         });
     }
+
+    // Handle closing the notifications tab
     handleClose = () => {
         this.setState({ anchorEl: null });
     }
+
+    // Handle opening the notifications tab
     onMenuOpened = () => {
+        // Get the unread notification IDs
         let unreadNotificationsId = this.props.notifications
-            .filter(not => !not.read)
+            .filter(not => !not.read) // Only add the elements that have not been read to the array (filter)
             .map(not => not.notificationsId);
-        this.props.markNotificationsRead(unreadNotificationsId);
+        this.props.markNotificationsRead(unreadNotificationsId); // send the ID to post req to make it as read = true
     }
 
     render() {
-        const notifications = this.props.notifications;
+        const notifications = this.props.notifications; // notification object
         const anchorEl = this.state.anchorEl;
 
         dayjs.extend(relativeTime)
 
         let notificationsIcon;
-        // Change notification deping on comment or like
+        // Change notification deping on comment or like9
         if (notifications && notifications.length > 0){
             // show the number of nots
             notifications.filter(not => not.read === false).length > 0 // notifications not read
-            ? notificationsIcon = (
+            ? (notificationsIcon = (
                 <Badge badgeContent={notifications.filter(not => not.read === false).length}
                     color='secondary'>
                         <NotificationsIcon />
                 </Badge>
-            ) : (
+            )) : (
                 notificationsIcon = <NotificationsIcon />
             )
         } else {
@@ -65,23 +70,25 @@ class Notifications extends Component {
         }
 
         let notificationsMarkUp =
-            Notifications && notifications.length > 0 ?(
+            notifications && notifications.length > 0 ?(
                 // map thru nots and show em
-                notifications.map(not => {
-                    const verb = not.type === 'like' ? 'liked' : 'commented on';
+                notifications.map((not) => { // Mapping "not" to each of these elements ==> not object = all elements of notification
+
+                    const verb = not.type === 'like' ? 'liked' : 'commented on'; // Verb if its a comment of a like
                     const time = dayjs(not.createdAt).fromNow();
-                    const iconColor = not.read ? 'primary' : 'secondary';
+                    const iconColor = not.read ? 'primary' : 'secondary'; // if read, mark diff colors
                     const icon = not.type === 'like' ? (
-                        <FavoriteIcon color={iconColor} style={{ marginRight: 10 }} /> // Like noti
+
+                        <FavoriteIcon color={iconColor} style={{ marginRight: 10 }} /> // Like icon
                     ) : (
-                        <ChatIcon color={iconColor} style= {{ marginRight: 10 }} /> // Comment noti
+                        <ChatIcon color={iconColor} style= {{ marginRight: 10 }} /> // Comment icon
                     );
                     return (
-                        <MenuItem key={notifications.createdAt} onClick={this.handleClose}>
+                        <MenuItem key={Math.random()} onClick={this.handleClose}>
                             {icon}
                             <Typography
                                 component={Link}
-                                color='default'
+                                color='secondary'
                                 variant='body1'
                                 to={`/users/${not.recipient}/scream/${not.screamId}`}>
                                     {not.sender} {verb} ya post {time}
@@ -118,8 +125,8 @@ class Notifications extends Component {
 }
 
 Notifications.propTypes = {
-    markNotificationsRead: PropTypes.func.isRequired,
-    Notifications: PropTypes.array.isRequired
+    markNotificationsRead: PropTypes.func.isRequired, // post req to mark as read
+    notifications: PropTypes.array.isRequired
 }
 
 const mapStateToProps = state => ({

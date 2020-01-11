@@ -3,36 +3,40 @@ import { connect } from 'react-redux';
 import CustomBotton from '../../util/CustomBotton'
 import PostScream from '../Scream/PostScream';
 import Notifications from './Notifications';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+
 
 // MUI tings
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
-import PropTypes from 'prop-types';
-import { Tooltip, IconButton, Icon } from '@material-ui/core';
 
 // Icons
-import AddIcon from '@material-ui/icons/Add';
 import HomeIcon from '@material-ui/icons/Home';
-import { Link } from 'react-router-dom';
 
 export class Navbar extends Component {
     render() {
         const { authenticated } = this.props
         return (
             <AppBar>
+                {/* Use toolbar because its inline - one after the other */}
                 <Toolbar className="nav-container">
-                    {authenticated ? (
+                    {/* When the user is logged in, they'll be prompted with these options */}
+                    {authenticated ? ( // if user is authenticated
                         <Fragment>
                             <PostScream />
+
                             <Link to="/">
                                 <CustomBotton tip="Home">
                                     <HomeIcon />
                                 </CustomBotton>
                             </Link>
+
                             <Notifications />
                         </Fragment>
                     ) : (
+                        // When user is offline, they'll be prompted with these options
                         <Fragment>
                             <Button color='inherit' component={Link} to="/login">Login</Button>
                             <Button color='inherit' component={Link} to="/">Home</Button>
@@ -46,7 +50,7 @@ export class Navbar extends Component {
 }
 
 Navbar.propTypes = {
-    authenticated: PropTypes.bool.isRequired
+    authenticated: PropTypes.bool // Not required since user might not be authenticated
 }
 
 const mapStateToProps = state => ({

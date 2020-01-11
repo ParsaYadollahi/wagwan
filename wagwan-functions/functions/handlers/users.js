@@ -46,7 +46,7 @@ exports.signup = (req, res) => {
             const userCredentials = { // schema for email of user
                 handle: newUser.handle,
                 email: newUser.email,
-                createAt: new Date().toISOString(),
+                createdAt: new Date().toISOString(),
                 imageUrl: `https://firebasestorage.googleapis.com/v0/b/${
                     config.storageBucket
                 }/o/${noImg}?alt=media`, // Base url for the image
@@ -134,7 +134,7 @@ exports.getAuthenticatedUser = (req, res) => {
                 resData.notifications.push({
                     recipient: doc.data().recipient,
                     sender: doc.data().sender,
-                    createAt: doc.data().createAt,
+                    createdAt: doc.data().createdAt,
                     screamId: doc.data().screamId,
                     type: doc.data().type,
                     read: doc.data().read,
@@ -222,7 +222,7 @@ exports.getUserDetails = (req, res) => {
             data.forEach(doc => {
                 userData.screams.push({ // Push the data with the Id
                     body: doc.data().body,
-                    createAt: doc.data().createAt,
+                    createdAt: doc.data().createdAt,
                     userHandle: doc.data().userHandle,
                     userImage: doc.data().userImage,
                     likeCount: doc.data().likeCount,
