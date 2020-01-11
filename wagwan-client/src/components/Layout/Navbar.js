@@ -18,7 +18,7 @@ import { Link } from 'react-router-dom';
 
 export class Navbar extends Component {
     render() {
-        const authenticated = this.props
+        const { authenticated } = this.props
         return (
             <AppBar>
                 <Toolbar className="nav-container">
@@ -46,11 +46,11 @@ export class Navbar extends Component {
 }
 
 Navbar.propTypes = {
-    authenticated: PropTypes.bool
+    authenticated: PropTypes.bool.isRequired
 }
 
 const mapStateToProps = state => ({
     authenticated: state.user.authenticated
 })
 
-export default Navbar
+export default connect(mapStateToProps)(Navbar);
