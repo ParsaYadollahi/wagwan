@@ -13,37 +13,37 @@ import ScreamSkeleton from '../util/ScreamSkeleton';
 import ProfileSkeleton from '../util/ProfileSkeleton';
 
 class users extends Component {
-    state = {
+    state = { // Data
         profile: null,
         screamIdParam: null
-    }
+    };
     componentDidMount() {
         const handle = this.props.match.params.handle; // Get handle from URL ('/user/:handle')
-        const screamId = this.props.match.params.screamId;
-
-        if (screamId) {
+        const screamId = this.props.match.params.screamId; // Get screamId from URL
+        if (screamId) { // If we get a screamId, set it to paramss
             this.setState({ screamIdParam: screamId })
-        }
-
-
+        };
         this.props.getUserData(handle);
-        axios.get(`/user/${handle}`)
+
+        axios.get(`/user/${handle}`) // getUserDetails
             .then(res => {
                 this.setState({
-                    profile: res.data.user
+                    profile: res.data.user // Add the response data into profile
                 })
             })
             .catch(err => console.log(err));
 
-    }
+    };
     render() {
         const { screams, loading } = this.props.data;
         const { screamIdParam } = this.state;
 
         const screamsMarkup = loading ? (
-            <ScreamSkeleton />
-        ) : screams === null ? ( // Havent posted anything
-            <p>No screams from the user</p>
+            <ScreamSkeleton /> // If loading, display the skeleton
+            // Havent posted anything
+        ) : screams === null ? (
+            <p>This mans hasn't posted anything yet</p>
+            // H
         ) : !screamIdParam  ? (
             screams.map(scream => <Screams key={scream.screamId} scream={scream} />)
         ) : ( // trying to visit scream
@@ -54,7 +54,7 @@ class users extends Component {
                     return <Scream key={scream.screamId} scream={scream} openDialog />
                 }
             })
-        )
+        );
         return (
             <Grid container spacing={3}>
             <Grid item sm={8} xs={12}>
@@ -65,20 +65,20 @@ class users extends Component {
                     <ProfileSkeleton />
                 ) :  (
                     <StaticProfile profile={this.state.profile} />
-                )}
+                )};
             </Grid>
         </Grid>
-        )
-    }
-}
+        );
+    };
+};
 
 users.propTypes = {
     getUserData: PropTypes.func.isRequired,
     data: PropTypes.object.isRequired
-}
+};
 
 const mapStateToProps = state => ({
     data: state.data
-})
+});
 
 export default connect(mapStateToProps, {getUserData})(users);

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import PropTypes from 'prop-types'; // Prop types (type checking)
 import sixGod from '../images/6-god.png'
+import { Link } from 'react-router-dom';
 
 // MUI tings
 import Grid from '@material-ui/core/Grid';
@@ -25,13 +26,15 @@ class login extends Component {
             email: '',
             password: '',
             errors: {}
-        }
-    }
+        };
+    };
     componentWillReceiveProps(nextProps) {
         if (nextProps.UI.errors) {
-            this.setState({ errors: nextProps.UI.errors });
-        }
-    }
+            this.setState({
+                errors: nextProps.UI.errors
+            });
+        };
+    };
 
     handleSubmit = (e) => {
         e.preventDefault();
@@ -44,71 +47,77 @@ class login extends Component {
 
     handleChange = (e) => {
         this.setState({
-            [e.target.name]: e.target.value
+            [e.target.name]: e.target.value // Change char per char
         });
-    }
+    };
 
     render() {
         const { classes, UI: { loading } } = this.props; // destructutre
         const { errors } = this.state;
-        const Link = require("react-router-dom").Link;
         return (
-            <Grid container className={classes.form}>
-                <Grid item sm/>
-                <Grid item sm>
-                    <img src={sixGod} alt="6 mans" className={classes.image} />
-                    <Typography variant="h2" className={classes.pageTitle}>
-                         Login
-                    </Typography>
-                    <form noValidate onSubmit={this.handleSubmit}>
-                        <TextField
-                            id="email"
-                            name="email"
-                            type="mail"
-                            label="Email"
-                            className={classes.TextField}
-                            helperText={errors.email} // Display the errors
-                            error={ errors.email ? true : false }
-                            value={this.state.email}
-                            onChange={this.handleChange}
-                            fullWidth />
-                        <TextField
-                            id="password"
-                            name="password"
-                            type="password"
-                            label="Password"
-                            className={classes.TextField}
-                            helperText={errors.password} // Display the errors
-                            error={ errors.password ? true : false }
-                            value={this.state.password}
-                            onChange={this.handleChange}
-                            fullWidth />
-                        {errors.general && (
-                            <Typography variant="body2" className={classes.LoginError}>
-                                {errors.general}
-                            </Typography>
-                        )}
-                        <Button
-                            type="submit"
-                            variant="contained"
-                            color="primary"
-                            className={classes.button}
-                            disabled={loading}>
-                                Login
-                                {loading &&
-                                    <CircularProgress size={30} className={classes.loading} />}
-                        </Button>
-                        <br />
-                        <small>
-                            Sign Up <Link to="/signup">Here</Link>
-                        </small>
-                    </form>
-                </Grid>
-                <Grid item sm/>
+            <Grid container // outter grid to space in middle
+                direction="column"
+                justify="center"
+                alignItems="center"
+                className={classes.form}>
+                    {/* Inner grid for content */}
+                    <Grid item sm={4}>
+                        <img src={sixGod} alt="6 mans" className={classes.image} />
+                        <Typography variant="h2" className={classes.pageTitle}>
+                            Login
+                        </Typography>
+                        <form noValidate onSubmit={this.handleSubmit}>
+                            <TextField
+                                id="email"
+                                name="email"
+                                type="mail"
+                                label="Email"
+                                className={classes.TextField}
+                                helperText={errors.email} // Display the errors
+                                error={ errors.email ? true : false }
+                                value={this.state.email}
+                                onChange={this.handleChange}
+                                fullWidth />
+                            <TextField
+                                id="password"
+                                name="password"
+                                type="password"
+                                label="Password"
+                                className={classes.TextField}
+                                helperText={errors.password} // Display the errors
+                                error={ errors.password ? true : false }
+                                value={this.state.password}
+                                onChange={this.handleChange}
+                                fullWidth />
+                                {/* Display errors */}
+                            {errors.general && (
+                                <Typography variant="body2" className={classes.LoginError}>
+                                    {errors.general}
+                                </Typography>
+                            )}
+                            {/* Submit button */}
+                            <Button
+                                type="submit"
+                                variant="contained"
+                                color="primary"
+                                className={classes.button}
+                                disabled={loading}>
+                                    Login
+                                    {/* Loading circle when logging in */}
+                                    {loading &&
+                                        <CircularProgress size={30} className={classes.loading} />}
+                            </Button>
+                            <br />
+                            <small>
+                                Sign Up <Link to="/signup">Here</Link>
+                            </small>
+                        </form>
+                    </Grid>
+
             </Grid>
         );
-    }
-}
+    };
+};
 
 login.propTypes = { // All added to props
     classes: PropTypes.object.isRequired,
@@ -126,7 +135,7 @@ const mapStateToProps = (state) => ({
 
 const mapActionsToProps = {
     loginUser
-} // what actions we're going to use
+}; // what actions we're going to use
 
 // export component that need access to change Redux state.
-export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(login))
+export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(login));

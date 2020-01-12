@@ -103,7 +103,7 @@ class Screams extends Component {
                     <span>{likeCount} Likes</span>
 
                     {/* Comments */}
-                    <Link to={`/users/${userHandle}/scream/${screamId}`}>
+                    <Link to={`/users/${userHandle}/scream/${screamId}`} >
                         <CustomButton tip="Comments">
                             <ChatIcon color="primary" />
                         </CustomButton>

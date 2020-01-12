@@ -18,9 +18,12 @@ class home extends Component {
 
         let recentScreamsMarkup = !loading ? ( // If not loading, show screams
             screams.map((scream) =>
-                <Scream key={scream.screamId} scream={scream}/>)
+                <Scream
+                    key={scream.screamId}
+                    scream={scream}
+                />)
         ) : (
-            <ScreamSkeleton />
+            <ScreamSkeleton /> // Show the skeleton if page still loading
         );
         return (
             <Grid container spacing={3}>
@@ -37,7 +40,7 @@ class home extends Component {
 
 home.propTypes = {
     getScreams: PropTypes.func.isRequired,
-    data: PropTypes.object.isRequired
+    data: PropTypes.object.isRequired // contains screams and loading
 }
 
 const mapStateToProps = (state) => ({ // data reducer puts data in the obj

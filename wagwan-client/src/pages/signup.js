@@ -130,6 +130,7 @@ class signup extends Component {
                                     <CircularProgress size={30} className={classes.loading} />}
                         </Button>
                         <br />
+                        {/* Create an account form */}
                         <small>
                             Have an account? Login <Link to="/login">Here</Link>
                         </small>
