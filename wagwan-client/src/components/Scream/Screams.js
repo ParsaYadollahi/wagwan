@@ -44,7 +44,8 @@ class Screams extends Component {
 
     render() {
         dayjs.extend(relativeTime)
-        const { classes,
+        const {
+            classes,
             scream : {
                 body,
                 createdAt,
@@ -60,15 +61,17 @@ class Screams extends Component {
             }
         } = this.props; // destrcuture classes
 
-
-        const deleteButton = authenticated && userHandle === handle ? (
+        // Delete Button
+        const deleteButton = authenticated && userHandle === handle ? ( // If the user is authenticated and the post is his
             <DeleteScream screamId={screamId} /> // If the post is the users, allow delete possibility
         ) : null
+
         return (
             <Card className={classes.card}>
                 <CardMedia
-                image={userImage}
-                title="Profile image" className={classes.image}/>
+                    image={userImage}
+                    title="Profile image" className={classes.image}
+                />
                 <CardContent className={classes.content}>
                     <Typography
                         variant="h5"
@@ -77,25 +80,42 @@ class Screams extends Component {
                         color='inherit'>
                             {userHandle}
                     </Typography>
+
+                    {/* Delete Button */}
                     {deleteButton}
-                    <Typography variant="body2" color="textSecondary">
-                        {dayjs(createdAt).fromNow()}
+
+                    {/* CreateAt */}
+                    <Typography
+                        variant="body2"
+                        color="textSecondary">
+                            {dayjs(createdAt).fromNow()}
                     </Typography>
-                    <Typography variant="body1">
-                        {body}
+
+                    {/* Content */}
+                    <Typography
+                        variant="body1">
+                            {body}
                     </Typography>
-                    <LikeButton screamId={screamId} />
+
+                    {/* Like button */}
+                    <LikeButton
+                        screamId={screamId}/>
                     <span>{likeCount} Likes</span>
+
+                    {/* Comments */}
                     <Link to={`/users/${userHandle}/scream/${screamId}`}>
                         <CustomButton tip="Comments">
                             <ChatIcon color="primary" />
                         </CustomButton>
                     </Link>
                     <span>{commentCount} comments</span>
+
+                    {/* Open scream dialogue */}
                     <ScreamDialog
                         screamId={screamId}
                         userHandle={userHandle}
-                        openDialog={this.props.openDialog} />
+                        openDialog={this.props.openDialog}
+                    />
                 </CardContent>
             </Card>
         )
