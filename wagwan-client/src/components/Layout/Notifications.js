@@ -35,7 +35,7 @@ class Notifications extends Component {
     // Handle closing the notifications tab
     handleClose = () => {
         this.setState({ anchorEl: null });
-    }
+    };
 
     // Handle opening the notifications tab
     onMenuOpened = () => {
@@ -44,13 +44,14 @@ class Notifications extends Component {
             .filter(not => !not.read) // Only add the elements that have not been read to the array (filter)
             .map(not => not.notificationsId);
         this.props.markNotificationsRead(unreadNotificationsId); // send the ID to post req to make it as read = true
-    }
+    };
 
     render() {
         const notifications = this.props.notifications; // notification object
         const anchorEl = this.state.anchorEl;
 
-        dayjs.extend(relativeTime)
+        dayjs.extend(relativeTime);
+        console.log(notifications)
 
         let notificationsIcon;
         // Change notification deping on comment or like9

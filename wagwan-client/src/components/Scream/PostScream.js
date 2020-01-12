@@ -20,19 +20,6 @@ import CloseIcon from '@material-ui/icons/Close';
 
 const styles = theme => ({
     ...theme.spreadThis,
-    submitButton: {
-        position: 'relative',
-        margin: '20px auto 10px auto',
-        float: "right"
-    },
-    progrssSpinner: {
-        position: 'absolute'
-    },
-    closeButton: {
-        position: 'absolute',
-        left: '92%',
-        top: '3%'
-    }
 });
 
 
@@ -42,24 +29,29 @@ class PostScream extends Component {
         body: '',
         errors: {}
     };
-    getDerivedStateFromProps(nextProps) {
+    componentWillReceiveProps(nextProps) {
         if (nextProps.UI.errors) {
             this.setState({
                 errors: nextProps.UI.errors
             });
         };
         if (!nextProps.UI.errors && !nextProps.UI.loading) {
-            this.setState({ body: '', open: false, errors: {} }); // remove the text when submitted
+            this.setState({
+                body: '',
+                open: false,
+                errors: {}
+            }); // remove the text when submitted
         }
     }
     handleOpen = () => {
         this.setState({ open: true })
     };
     handleClose = () => {
-        this.props.clearErrors();
+        this.props.clearErrors(); // clear errors from props
         this.setState({ open: false, errors: {} }) // Clear the errors once closed
     };
     handleChange = (e) => {
+        // Change for each character
         this.setState({ [e.target.name]: e.target.value })
     };
     handleSubmit = (e) => {
@@ -71,19 +63,22 @@ class PostScream extends Component {
         const { classes, UI: { loading }} = this.props;
         return (
             <Fragment>
-                <CustomButton onClick={this.handleOpen} tip="Make a Post">
-                    <AddIcon />
+                <CustomButton // Addition button icon
+                    onClick={this.handleOpen}
+                    tip="Make a Post">
+                        <AddIcon />
                 </CustomButton>
-                <Dialog
+                <Dialog // open the dialogue to comment
                     open={this.state.open}
                     onClose={this.handleClose}
                     fullWidth>
-                        <CustomButton
+                        <CustomButton // The X top right to close
                             tip='Close'
                             onClick={this.handleClose}
                             tipClassName={classes.closeButton}>
                                 <CloseIcon />
                         </CustomButton>
+                        {/* Section to add comment */}
                         <DialogContent>
                             <DialogTitle style={{ paddingLeft: "0px" }}>What's on your mind?</DialogTitle>
                             <form onSubmit={this.handleSubmit}>

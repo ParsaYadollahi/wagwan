@@ -50,8 +50,8 @@ class DeleteScream extends Component {
                         <DeleteOutline style={{ color: "#e57373" }} />
                 </CustomButton>
                 <Dialog
-                    open={this.state.open}
-                    onClose={this.handleClose}
+                    open={this.state.open} // handled by open state
+                    onClose={this.handleClose} // handle by close state
                     fullWidth
                     maxWidth="sm"
                     >
@@ -79,5 +79,5 @@ DeleteScream.propTypes = {
 }
 
 
-// Don't need map state to props, dont need statem only action
+// Don't need map state to props, i.e, dont need state only action
 export default connect(null, { deleteScream })(withStyles(styles)(DeleteScream));

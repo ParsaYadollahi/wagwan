@@ -18,7 +18,7 @@ import Typography from '@material-ui/core/Typography';
 
 // Icons
 import CloseIcon from '@material-ui/icons/Close';
-import UnfoldMore from '@material-ui/icons/UnfoldMore';
+import UnfoldMoreIcon from '@material-ui/icons/UnfoldMore';
 import ChatIcon from '@material-ui/icons/Chat';
 
 
@@ -28,33 +28,6 @@ import { getScream, clearErrors } from '../../redux/actions/dataActions';
 
 const styles = theme => ({
     ...theme.spreadThis,
-    invisibleSep: {
-        border: 'none',
-        margin: 4
-    },
-    profileImage: {
-        maxWidth: 200,
-        height: 200,
-        borderRadius: '50%',
-        objectFit: 'cover'
-    },
-    DialogContent: {
-        padding: 20
-    },
-    closeButton: {
-        position: 'absolute',
-        left: '90%'
-    },
-    expandButton: {
-        position: 'absolute',
-        left: '92%'
-    },
-    spinner: {
-        textAlign: 'center',
-        marginTop: 50,
-        marginBottom: 50,
-
-    }
 });
 
 class ScreamDialog extends Component {
@@ -71,31 +44,27 @@ class ScreamDialog extends Component {
     componentDidMount() {
         if (this.props.openDialog) {
           this.handleOpen();
-        }
-    }
+        };
+    };
     handleOpen = () => { // Create a new path when opening a post
         let oldPath = window.location.pathname;
         const { userHandle, screamId } = this.props;
         const newPath = `/users/${userHandle}/scream/${screamId}`;
 
-        if (oldPath === newPath) {
+        if (oldPath === newPath) { // refresh the old path to not get lost
             oldPath = `/users/${userHandle}`; // changes the url
-        }
-
-        if (oldPath === newPath) {
-            oldPath = `/users/${userHandle}`;
-        }
-        window.history.pushState(null, null, newPath);
+        };
+        window.history.pushState(null, null, newPath); // Go to the new path i.e the mans comments window
 
         this.setState({ open: true, oldPath, newPath });
-        this.props.getScream(this.props.screamId);
+        this.props.getScream(this.props.screamId); // Get the scream info
 
     };
 
-  handleClose = () => {
-    window.history.pushState(null, null, this.state.oldPath); // change the path back to "/"
-    this.setState({ open: false });
-    this.props.clearErrors();
+    handleClose = () => {
+        window.history.pushState(null, null, this.state.oldPath); // change the path back to "/"
+        this.setState({ open: false });
+        this.props.clearErrors(); // clear errors when closing
     };
 
     render() {
@@ -111,7 +80,7 @@ class ScreamDialog extends Component {
                 comments // array of comments
             },
             UI: { loading }
-        } = this.props
+        } = this.props;
 
         const dialogMarkUp = loading ? (
             // Spinner
@@ -120,10 +89,12 @@ class ScreamDialog extends Component {
             </div>
         ) : (
             <Grid container spacing={1}>
+                {/* Image of commentor */}
                 <Grid item sm={5}>
                     <img src={userImage} alt ="Profile" className={classes.profileImage}/>
                 </Grid>
                 <Grid item sm={7}>
+                    {/* USERS NAME => link to their profile */}
                     <Typography
                         component={Link}
                         color="primary"
@@ -132,23 +103,29 @@ class ScreamDialog extends Component {
                             @{userHandle}
                     </Typography>
                     <hr className={classes.invisibleSep} />
+                    {/* Date */}
                     <Typography
                         variant="body2"
                         color="textSecondary">
                             {dayjs(createdAt).format('h:mm a, MMMM DD YYYY')}
                     </Typography>
                     <hr className={classes.invisibleSep} />
+                    {/* Content of comment */}
                     <Typography variant='body1'>
                         <span>{body}</span>
                     </Typography>
+
+                    {/* Display like and comment count */}
                     <LikeButton screamId={screamId} />
                     <span>{likeCount} Likes</span>
                     <CustomButton tip="Comments">
                         <ChatIcon color="primary" />
                     </CustomButton>
-                    <span>{commentCount} comments</span>
+                    <span>{commentCount} Comments</span>
+
                 </Grid>
                 <hr className={classes.visibleSep} />
+                {/* Send the screamId to CommentForm => Creates its own comment */}
                 <CommentForm screamId={screamId} />
                 <Comments comments={comments} />
             </Grid>
@@ -156,31 +133,33 @@ class ScreamDialog extends Component {
 
     return (
         <Fragment>
-            <CustomButton
+            <CustomButton // The expand button for the comments
                 onClick={this.handleOpen}
                 tip="Expand Post"
                 tipClassName={classes.expandButton}>
-                    <UnfoldMore color="primary" />
+                    <UnfoldMoreIcon color="primary" />
             </CustomButton>
             <Dialog
                 open={this.state.open}
                 onClose={this.handleClose}
                 fullWidth>
+                    {/* Close button */}
                     <CustomButton
                         tip='Close'
                         onClick={this.handleClose}
                         tipClassName={classes.closeButton}>
                             <CloseIcon />
-                    </CustomButton>
+                    </CustomButton>;
+                    {/* Content of the scream */}
                     <DialogContent className={classes.dialogContent}>
                         {dialogMarkUp}
                     </DialogContent>
                 </Dialog>
         </Fragment>
-        )
-    }
+        );
+    };
 
-}
+};
 
 ScreamDialog.propTypes = {
     getScream: PropTypes.func.isRequired,
@@ -189,12 +168,12 @@ ScreamDialog.propTypes = {
     scream: PropTypes.object.isRequired,
     UI: PropTypes.object.isRequired,
     clearErrors: PropTypes.func.isRequired
-}
+};
 
 const mapStateToProps = state => ({
     scream: state.data.scream,
     UI: state.UI
-})
+});
 
 const mapActionsToProps = {
     getScream,

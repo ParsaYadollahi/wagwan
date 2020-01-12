@@ -105,6 +105,38 @@ export default {
     },
     commentData: {
         marginLeft: 20
-    }
+    },
+    submitButton: {
+      position: 'relative',
+      margin: '20px auto 10px auto',
+      float: "right"
+  },
+  progrssSpinner: {
+      position: 'absolute'
+  },
+  closeButton: {
+      position: 'absolute',
+      left: '92%',
+      top: '3%'
+  },
+profileImage: {
+    maxWidth: 200,
+    height: 200,
+    borderRadius: '50%',
+    objectFit: 'cover'
+},
+DialogContent: {
+    padding: 20
+},
+expandButton: {
+    position: 'absolute',
+    left: '92%'
+},
+spinner: {
+    textAlign: 'center',
+    marginTop: 50,
+    marginBottom: 50,
+
+}
     }
   }

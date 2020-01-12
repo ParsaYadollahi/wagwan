@@ -38,7 +38,7 @@ const ProfileSkeleton = (props) => {
         <Paper className={classes.paper}>
             <div className={classes.profile}>
                 <div className="image-wrapper">
-                    <img src={blankMans} alt="profile" c className="profile-image" />
+                    <img src={blankMans} alt="profile" className="profile-image" />
                 </div>
                 <hr />
                 <div className="profile-details">
