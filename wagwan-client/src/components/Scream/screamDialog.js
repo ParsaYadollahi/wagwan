@@ -18,7 +18,6 @@ import Typography from '@material-ui/core/Typography';
 
 // Icons
 import CloseIcon from '@material-ui/icons/Close';
-import UnfoldMoreIcon from '@material-ui/icons/UnfoldMore';
 import ChatIcon from '@material-ui/icons/Chat';
 
 
@@ -135,9 +134,8 @@ class ScreamDialog extends Component {
         <Fragment>
             <CustomButton // The expand button for the comments
                 onClick={this.handleOpen}
-                tip="Expand Post"
-                tipClassName={classes.expandButton}>
-                    <UnfoldMoreIcon color="primary" />
+                tip="Comment">
+                    <ChatIcon color="primary" />
             </CustomButton>
             <Dialog
                 open={this.state.open}

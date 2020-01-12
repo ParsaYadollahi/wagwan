@@ -20,11 +20,13 @@ import Typography from "@material-ui/core/Typography"
 import { connect } from 'react-redux';
 
 // Icons
-import ChatIcon from '@material-ui/icons/Chat';
+import UnfoldMoreIcon from '@material-ui/icons/UnfoldMore';
 
 
 
-const styles = {
+
+const styles = theme => ({
+    ...theme.spreadThis,
     card: {
         position: 'relative',
         marginBottom: 20,
@@ -37,7 +39,7 @@ const styles = {
         padding: 25,
         objectFit: 'cover'
     }
-};
+});
 
 
 class Screams extends Component {
@@ -103,19 +105,21 @@ class Screams extends Component {
                     <span>{likeCount} Likes</span>
 
                     {/* Comments */}
-                    <Link to={`/users/${userHandle}/scream/${screamId}`} >
-                        <CustomButton tip="Comments">
-                            <ChatIcon color="primary" />
-                        </CustomButton>
-                    </Link>
-                    <span>{commentCount} comments</span>
-
-                    {/* Open scream dialogue */}
-                    <ScreamDialog
+                        <ScreamDialog
                         screamId={screamId}
                         userHandle={userHandle}
                         openDialog={this.props.openDialog}
-                    />
+                        />
+                    <span>{commentCount} comments</span>
+
+                    {/* Open scream dialogue */}
+                    <Link to={`/users/${userHandle}/scream/${screamId}`} >
+                        <CustomButton
+                            tip="Expand"
+                            tipClassName={classes.expandButton}>
+                                <UnfoldMoreIcon color="primary" />
+                        </CustomButton>
+                    </Link>
                 </CardContent>
             </Card>
         )
