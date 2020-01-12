@@ -56,17 +56,19 @@ class Notifications extends Component {
         // Change notification deping on comment or like9
         if (notifications && notifications.length > 0){
             // show the number of nots
-            notifications.filter(not => not.read === false).length > 0 // notifications not read
+            notifications.filter(not => not.read === false).length > 0 // filter the nonread notifications
             ? (notificationsIcon = (
-                <Badge badgeContent={notifications.filter(not => not.read === false).length}
+
+                <Badge badgeContent={notifications.filter(not => not.read === false).length} // Indicate the number of non read notifications
                     color='secondary'>
                         <NotificationsIcon />
                 </Badge>
+
             )) : (
-                notificationsIcon = <NotificationsIcon />
+                notificationsIcon = <NotificationsIcon /> // An empty notification if there no new nots
             )
         } else {
-            notificationsIcon = <NotificationsIcon />
+            notificationsIcon = <NotificationsIcon /> // An empty notification if there no new nots
         }
 
         let notificationsMarkUp =
@@ -84,6 +86,7 @@ class Notifications extends Component {
                         <ChatIcon color={iconColor} style= {{ marginRight: 10 }} /> // Comment icon
                     );
                     return (
+                        // List all the notifications
                         <MenuItem key={Math.random()} onClick={this.handleClose}>
                             {icon}
                             <Typography
