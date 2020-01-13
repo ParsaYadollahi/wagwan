@@ -27,6 +27,9 @@ import { getScream, clearErrors } from '../../redux/actions/dataActions';
 
 const styles = theme => ({
     ...theme.spreadThis,
+    commentButton: {
+        padding: '5px'
+    }
 });
 
 class ScreamDialog extends Component {
@@ -117,8 +120,8 @@ class ScreamDialog extends Component {
                     {/* Display like and comment count */}
                     <LikeButton screamId={screamId} />
                     <span>{likeCount} Likes</span>
-                    <CustomButton tip="Comments">
-                        <ChatIcon color="primary" />
+                    <CustomButton tip="Comments" btnClassName={classes.commentButton}>
+                        <ChatIcon color="primary"/>
                     </CustomButton>
                     <span>{commentCount} Comments</span>
 
@@ -134,7 +137,8 @@ class ScreamDialog extends Component {
         <Fragment>
             <CustomButton // The expand button for the comments
                 onClick={this.handleOpen}
-                tip="Comment">
+                tip="Comment"
+                btnClassName={classes.commentButton}>
                     <ChatIcon color="primary" />
             </CustomButton>
             <Dialog
@@ -147,7 +151,7 @@ class ScreamDialog extends Component {
                         onClick={this.handleClose}
                         tipClassName={classes.closeButton}>
                             <CloseIcon />
-                    </CustomButton>;
+                    </CustomButton>
                     {/* Content of the scream */}
                     <DialogContent className={classes.dialogContent}>
                         {dialogMarkUp}

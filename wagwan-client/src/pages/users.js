@@ -57,20 +57,20 @@ class users extends Component {
         );
         return (
             <Grid container spacing={3}>
-            <Grid item sm={8} xs={12}>
-                {screamsMarkup}
+                <Grid item sm={8} xs={12}>
+                    {screamsMarkup}
+                </Grid>
+                <Grid item sm={4} xs={12}>
+                    {this.state.profile === null ? (
+                        <ProfileSkeleton /> // If there are no profiles ==> load skeleton
+                    ) :  (
+                        <StaticProfile profile={this.state.profile} /> // load the profiles
+                    )}
+                </Grid>
             </Grid>
-            <Grid item sm={4} xs={12}>
-                {this.state.profile === null ? (
-                    <ProfileSkeleton />
-                ) :  (
-                    <StaticProfile profile={this.state.profile} />
-                )};
-            </Grid>
-        </Grid>
-        );
+            );
+        };
     };
-};
 
 users.propTypes = {
     getUserData: PropTypes.func.isRequired,

@@ -6,7 +6,7 @@ import blankMans from '../images/blank_mans.png';
 // MUI
 import Paper from '@material-ui/core/Paper';
 // Icons
-import LocationOn from '@material-ui/icons/LocationOn';
+import LocationOnIcon from '@material-ui/icons/LocationOn';
 import LinkIcon from '@material-ui/icons/Link';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 
@@ -30,39 +30,44 @@ const styles = theme => ({
         width: '50%',
         marginBottom: 10,
     }
-})
+});
 
 const ProfileSkeleton = (props) => {
     const { classes } = props;
     return (
         <Paper className={classes.paper}>
             <div className={classes.profile}>
+                {/* Profile Image */}
                 <div className="image-wrapper">
                     <img src={blankMans} alt="profile" className="profile-image" />
                 </div>
-                <hr />
+                    <hr />
+                    {/* Profile details */}
                 <div className="profile-details">
+                    {/* Empty full line */}
                     <div className={classes.handle} />
-                    <hr />
+                        <hr />
+                    {/* Empty half line */}
                     <div className={classes.fullLine} />
                     <div className={classes.fullLine} />
-                    <hr />
-                    <LocationOn color='primary' />
+                        <hr />
+                    {/* Location */}
+                    <LocationOnIcon color='primary' />
                     <span>Location</span>
-                    <hr />
+                        <hr />
+                    {/* Website */}
                     <LinkIcon color='primary' /> https://website.com
-                    <hr />
+                        <hr />
+                    {/* Calendar */}
                     <CalendarTodayIcon color="primary" /> Joined Date
-
                 </div>
-
             </div>
         </Paper>
-    )
-}
+    );
+};
 
 ProfileSkeleton.propTypes = {
     classes: PropTypes.object.isRequired
-}
+};
 
 export default withStyles(styles)(ProfileSkeleton);

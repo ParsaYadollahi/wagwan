@@ -2,17 +2,23 @@ import React, { Component } from 'react'
 import CustomButton from '../../util/CustomBotton';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import withStyles from "@material-ui/core/styles/withStyles";
 
 // Icons
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
 
-// import { connect } from 'react-redux'
+// Redux tings
 import { connect } from 'react-redux';
 import { likeScream, unlikeScream } from '../../redux/actions/dataActions';
 
-export class LikeButton extends Component {
+const styles = {
+    likeButton: {
+        padding: '4px'
+    }
+}
 
+export class LikeButton extends Component {
     likedScream = () => {
         // Check if theres a likes in user object
         if (this.props.user.likes &&
@@ -32,19 +38,20 @@ export class LikeButton extends Component {
     };
 
     render() {
+        const { classes } = this.props;
         const { authenticated } = this.props.user;
         const likeButton = !authenticated ? ( // Not logged in
             <Link to='/login'>
-                <CustomButton tip='Like'>
+                <CustomButton tip='Like' btnClassName={classes.likeButton}>
                     <FavoriteBorder color="primary" />
                 </CustomButton>
             </Link>
         ) : this.likedScream() ? ( // If returns true, means its present in the array (If user is logged in)
-                <CustomButton tip='Unlike' onClick={this.unlikeScream}>
+                <CustomButton tip='Unlike' onClick={this.unlikeScream} btnClassName={classes.likeButton}>
                     <FavoriteIcon color="primary" />
                 </CustomButton>
             ) : (
-                <CustomButton tip='Like' onClick={this.likeScream}>
+                <CustomButton tip='Like' onClick={this.likeScream} btnClassName={classes.likeButton}>
                     <FavoriteBorder color="primary" />
                 </CustomButton>
             );
@@ -57,6 +64,7 @@ LikeButton.propTypes = {
     screamId: PropTypes.string.isRequired,
     likeScream: PropTypes.func.isRequired,
     unlikeScream: PropTypes.func.isRequired,
+    classes: PropTypes.object.isRequired
 }
 
 const mapStateToProps = (state) => ({
@@ -69,4 +77,4 @@ const mapActionsToProps = {
 }
 
 
-export default connect(mapStateToProps, mapActionsToProps)(LikeButton);
+export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(LikeButton));

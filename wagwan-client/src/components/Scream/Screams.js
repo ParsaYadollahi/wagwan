@@ -101,8 +101,9 @@ class Screams extends Component {
 
                     {/* Like button */}
                     <LikeButton
-                        screamId={screamId}/>
-                    <span>{likeCount} Likes</span>
+                        screamId={screamId}
+                    />
+                    <span style={{paddingRight: "10px"}}>{likeCount} Likes</span>
 
                     {/* Comments */}
                         <ScreamDialog

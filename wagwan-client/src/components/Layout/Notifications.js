@@ -51,7 +51,6 @@ class Notifications extends Component {
         const anchorEl = this.state.anchorEl;
 
         dayjs.extend(relativeTime);
-        console.log(notifications)
 
         let notificationsIcon;
         // Change notification deping on comment or like9

@@ -119,7 +119,7 @@ class Profile extends Component {
                     </Button>
                 </div>
             </Paper>
-        )) : <ProfileSkeleton />
+        )) : <ProfileSkeleton /> // Load the profile skeleton if everything fails (loading)
 
         return profileMarkup;
     }
@@ -129,13 +129,16 @@ const mapStateToProps = (state) => ({
     user: state.user
 });
 
-const mapActionsToProps = { logoutUser, uploadImage };
+const mapActionsToProps = {
+    logoutUser,
+    uploadImage
+};
 
 Profile.propTypes = {
   logoutUser: PropTypes.func.isRequired,
   uploadImage: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
   classes: PropTypes.object.isRequired
-}
+};
 
 export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(Profile));

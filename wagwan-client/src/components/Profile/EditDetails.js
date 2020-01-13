@@ -141,6 +141,6 @@ const mapStateToProps = (state) => ({
 EditDetails.propTypes = {
     editUserData: PropTypes.func.isRequired,
     classes: PropTypes.object.isRequired
-}
+};
 
 export default connect(mapStateToProps, { editUserData })(withStyles(styles)(EditDetails));
