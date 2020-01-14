@@ -124,7 +124,8 @@ class signup extends Component {
                             variant="contained"
                             color="primary"
                             className={classes.button}
-                            disabled={loading}>
+                            disabled={loading}
+                            id="SignButtonSign">
                                 Sign Up
                                 {loading &&
                                     <CircularProgress size={30} className={classes.loading} />}

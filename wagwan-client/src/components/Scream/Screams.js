@@ -95,7 +95,8 @@ class Screams extends Component {
 
                     {/* Content */}
                     <Typography
-                        variant="body1">
+                        variant="body1"
+                        id="submitedCommentTest">
                             {body}
                     </Typography>
 

@@ -47,7 +47,7 @@ class DeleteScream extends Component {
                     tip="Delete Post"
                     onClick={this.handleOpen}
                     btnClassName={classes.deleteButton}>
-                        <DeleteOutline style={{ color: "#e57373" }} />
+                        <DeleteOutline  id="deleteCommentTest" style={{ color: "#e57373" }} />
                 </CustomButton>
                 <Dialog
                     open={this.state.open} // handled by open state
@@ -55,14 +55,14 @@ class DeleteScream extends Component {
                     fullWidth
                     maxWidth="sm"
                     >
-                     <DialogTitle>
+                     <DialogTitle id="youSureFinnaDelete">
                          You sure you finna delete the post?
                     </DialogTitle>
                     <DialogActions>
                         <Button onClick={this.handleClose} color='primary'>
                             Cancel
                         </Button>
-                        <Button onClick={this.deleteScream} color='secondary'>
+                        <Button id="deleteThePost" onClick={this.deleteScream} color='secondary'>
                             Delete
                         </Button>
                     </DialogActions>

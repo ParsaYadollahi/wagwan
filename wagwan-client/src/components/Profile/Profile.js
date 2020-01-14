@@ -76,7 +76,7 @@ class Profile extends Component {
 
                     </div><hr />
                     <div className="profile-details">
-            <MLink component={Link} to={`/users/${handle}`} color="primary" variant="h5">
+            <MLink component={Link} to={`/users/${handle}`} color="primary" id='userHandleTest' variant="h5">
                 @{handle}
             </MLink><hr />
             {bio && <Typography variant="body2">{bio}</Typography>}<hr />
@@ -99,7 +99,7 @@ class Profile extends Component {
 
                 <CustomBotton tip='Logout'
                           onClick={this.handleLogout}>
-                            <KeyboardReturn color="primary"  />
+                            <KeyboardReturn id="logoutButton" color="primary"  />
                 </CustomBotton>
 
                 <EditDetails />
@@ -107,14 +107,14 @@ class Profile extends Component {
             </Paper>
         ) : (
             <Paper className={classes.paper}>
-                <Typography variant="body2" align="center" >
+                <Typography variant="body2" id="doneTesting" align="center" >
                     No profile Found, Try again
                 </Typography>
                 <div className={classes.buttons}>
-                    <Button variant="contained" color="primary" component={Link} to='/login'>
+                    <Button variant="contained" color="primary" id="beginLogin" component={Link} to='/login'>
                         Login
                     </Button>
-                    <Button variant="contained" color="secondary" component={Link} to='/signup'>
+                    <Button variant="contained" color="secondary" id="beginSignup" component={Link} to='/signup'>
                         Sign Up
                     </Button>
                 </div>

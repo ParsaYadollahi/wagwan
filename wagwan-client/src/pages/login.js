@@ -101,7 +101,8 @@ class login extends Component {
                                 variant="contained"
                                 color="primary"
                                 className={classes.button}
-                                disabled={loading}>
+                                disabled={loading}
+                                id="loginButtonLogin">
                                     Login
                                     {/* Loading circle when logging in */}
                                     {loading &&

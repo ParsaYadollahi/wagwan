@@ -25,7 +25,7 @@ export class Navbar extends Component {
                     {/* When the user is logged in, they'll be prompted with these options */}
                     {authenticated ? ( // if user is authenticated
                         <Fragment>
-                            <PostScream />
+                            <PostScream id="postScreamTest"/>
 
                             <Link to="/">
                                 <CustomBotton tip="Home">
@@ -33,7 +33,7 @@ export class Navbar extends Component {
                                 </CustomBotton>
                             </Link>
 
-                            <Notifications />
+                            <Notifications/>
                         </Fragment>
                     ) : (
                         // When user is offline, they'll be prompted with these options

@@ -66,7 +66,7 @@ class PostScream extends Component {
                 <CustomButton // Addition button icon
                     onClick={this.handleOpen}
                     tip="Make a Post">
-                        <AddIcon />
+                        <AddIcon id="postScreamTest" />
                 </CustomButton>
                 <Dialog // open the dialogue to comment
                     open={this.state.open}
@@ -79,10 +79,11 @@ class PostScream extends Component {
                                 <CloseIcon />
                         </CustomButton>
                         {/* Section to add comment */}
-                        <DialogContent>
-                            <DialogTitle style={{ paddingLeft: "0px" }}>What's on your mind?</DialogTitle>
+                        <DialogContent id='postAScreamDialaog'>
+                            <DialogTitle id="whatsOnYourMindTest" style={{ paddingLeft: "0px" }}>What's on your mind?</DialogTitle>
                             <form onSubmit={this.handleSubmit}>
                                 <TextField
+                                    id="textAreaTest"
                                     name='body'
                                     type="text"
                                     label="Post"
@@ -95,6 +96,7 @@ class PostScream extends Component {
                                     onChange={this.handleChange}
                                     fullWidth/>
                                     <Button
+                                        id="submitScreamTest"
                                         type='submit'
                                         variant='contained'
                                         color='primary'
