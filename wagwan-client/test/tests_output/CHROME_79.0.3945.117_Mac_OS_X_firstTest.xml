@@ -5,9 +5,9 @@
 
   <testsuite name="firstTest"
     errors="0" failures="0" hostname="" id="" package="firstTest" skipped="0"
-    tests="3" time="18.49" timestamp="">
+    tests="3" time="16.75" timestamp="">
   
-    <testcase name="Login Test" classname="firstTest" time="3.804" assertions="4">
+    <testcase name="Login Test" classname="firstTest" time="3.760" assertions="4">
 
     
 
@@ -18,7 +18,7 @@
     
     </testcase>
   
-    <testcase name="Signup Test" classname="firstTest" time="5.024" assertions="4">
+    <testcase name="Signup Test" classname="firstTest" time="4.817" assertions="4">
 
     
 
@@ -29,7 +29,7 @@
     
     </testcase>
   
-    <testcase name="CreateAndDeletePostLogout" classname="firstTest" time="9.664" assertions="7">
+    <testcase name="CreateAndDeletePostLogout" classname="firstTest" time="8.174" assertions="7">
 
     
 

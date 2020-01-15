@@ -15,7 +15,7 @@ module.exports = {
             .setValue('#email', emailQuery)
             .setValue('#password', passwordQuery)
             .click(loginloginButton)
-            .waitForElementVisible(userAuthenticated)
+            .waitForElementVisible(userAuthenticated, 10000)
             .assert.elementPresent(userAuthenticated)
             .assert.containsText(userAuthenticated, 'user1')
 
@@ -28,10 +28,10 @@ module.exports = {
         const SignUpSignupButton = '#SignButtonSign'
         const userAuthenticated = '#userHandleTest'
 
-        const emailQuery = 'userTestc@mail.com';
+        const emailQuery = 'userTesterrrrrr@mail.com';
         const passwordQuery = '123456';
         const confirmPasswordQuery = '123456';
-        const userHandle = 'userTestc'
+        const userHandle = 'userTesterrrrrr'
 
         browser
             .url('http://localhost:3000/')
@@ -42,7 +42,7 @@ module.exports = {
             .setValue('#confirmPassword', confirmPasswordQuery)
             .setValue('#handle', userHandle)
             .click(SignUpSignupButton)
-            .waitForElementVisible(userAuthenticated)
+            .waitForElementVisible(userAuthenticated, 10000)
             .assert.elementPresent(userAuthenticated)
             .assert.containsText(userAuthenticated, userHandle)
 
@@ -81,11 +81,11 @@ module.exports = {
             .setValue('#password', passwordQuery)
             .click(loginloginButton)
             .click('#postScreamTest')
-            .waitForElementVisible(dialogInput)
+            .waitForElementVisible(dialogInput, 10000)
             .assert.containsText(postAScream, "What's on your mind?")
             .setValue(fillPost, commentInputed)
             .click(submitScream)
-            .waitForElementVisible(dialogInput)
+            .waitForElementVisible(dialogInput, 10000)
             .assert.containsText(submittedComment, commentInputed)
             .click(deletePost)
             .assert.containsText(approveDeleteButton, approveDeleteText)

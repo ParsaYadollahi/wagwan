@@ -53,8 +53,7 @@ class DeleteScream extends Component {
                     open={this.state.open} // handled by open state
                     onClose={this.handleClose} // handle by close state
                     fullWidth
-                    maxWidth="sm"
-                    >
+                    maxWidth="sm">
                      <DialogTitle id="youSureFinnaDelete">
                          You sure you finna delete the post?
                     </DialogTitle>

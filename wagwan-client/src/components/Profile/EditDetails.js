@@ -99,7 +99,8 @@ class EditDetails extends Component {
                                     className={classes.TextField}
                                     value={this.state.bio}
                                     onChange={this.handleChange}
-                                    fullWidth/>
+                                    fullWidth
+                                />
                                 <TextField
                                     name='website'
                                     type='text'
@@ -108,7 +109,8 @@ class EditDetails extends Component {
                                     className={classes.TextField}
                                     value={this.state.website}
                                     onChange={this.handleChange}
-                                    fullWidth/>
+                                    fullWidth
+                                />
                                 <TextField
                                     name='location'
                                     type='text'
@@ -117,7 +119,8 @@ class EditDetails extends Component {
                                     className={classes.TextField}
                                     value={this.state.location}
                                     onChange={this.handleChange}
-                                    fullWidth/>
+                                    fullWidth
+                                />
                             </form>
                         </DialogContent>
                         <DialogActions>
