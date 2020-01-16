@@ -11,6 +11,8 @@
     "axios": "^0.19.0",
     "cors": "^2.8.5",
     "dayjs": "^1.8.18",
+    "firebase": "^7.6.2",
+    "firebaseui": "^4.4.0",
     "jwt-decode": "^2.2.0",
     "moment": "^2.24.0",
     "react": "^16.12.0",

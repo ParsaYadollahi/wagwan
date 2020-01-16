@@ -1,34 +1,36 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <testsuites errors="0"
-            failures="0"
-            tests="3">
+            failures="1"
+            tests="1">
 
   <testsuite name="firstTest"
+<<<<<<< Updated upstream
     errors="0" failures="0" hostname="" id="" package="firstTest" skipped="0"
     tests="3" time="16.75" timestamp="">
   
     <testcase name="Login Test" classname="firstTest" time="3.760" assertions="4">
+=======
+    errors="0" failures="1" hostname="" id="" package="firstTest" skipped="2"
+    tests="1" time="6.701" timestamp="">
+  
+    <testcase name="Login Test" classname="firstTest" time="6.701" assertions="2">
+>>>>>>> Stashed changes
 
-    
+      <failure message="Timed out while waiting for element &lt;#userHandleTest&gt; to be present for 5000 milliseconds. - expected [0;32m&#34;visible&#34;[0m but got: [0;31m&#34;not found&#34;[0m [0;90m(5109ms)[0m">    at Object.Login Test (/Users/parsa/dev/wagwan/wagwan-client/test/tests/firstTest.js:18:14)
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)</failure>
 
-    
-
-    
-
-    
+    <failure message="    at Object.Login Test (/Users/parsa/dev/wagwan/wagwan-client/test/tests/firstTest.js:18:14)">    at processTicksAndRejections (internal/process/task_queues.js:97:5)</failure>
     </testcase>
   
+<<<<<<< Updated upstream
     <testcase name="Signup Test" classname="firstTest" time="4.817" assertions="4">
 
     
+=======
+>>>>>>> Stashed changes
 
-    
-
-    
-
-    
-    </testcase>
   
+<<<<<<< Updated upstream
     <testcase name="CreateAndDeletePostLogout" classname="firstTest" time="8.174" assertions="7">
 
     
@@ -40,15 +42,21 @@
     
 
     
+=======
+>>>>>>> Stashed changes
 
+  
     
-
-    
+    <testcase
+      name="Signup Test" classname="firstTest">
+      <skipped />
     </testcase>
-  
-
-  
-
+    
+    <testcase
+      name="CreateAndDeletePostLogout" classname="firstTest">
+      <skipped />
+    </testcase>
+    
   
   </testsuite>
 </testsuites>

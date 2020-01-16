@@ -25,7 +25,8 @@ const {
     addUserDetails,
     getAuthenticatedUser,
     getUserDetails,
-    leaveOnRead
+    leaveOnRead,
+    resetPass,
 } = require("./handlers/users");
 
 // Screams routes in screams.js
@@ -153,54 +154,3 @@ exports.screamDeleted = fbfunctions.region('us-central1').firestore.document('/s
         console.error(err);
       })
   });
-
-// exports.createNotificationOnLike = fbfunctions.region('us-central1').firestore.document('/likes/{id}')
-//     .onCreate((snapshot) => { // snapshot of like document
-//         db.doc(`/screams/${snapshot.data().screamId}`).get()
-//             .then(doc => {
-//                 if (doc.exists && doc.data().userHandle !== snapshot.data().userHandle){ // will always
-//                     return db.doc(`/notifications/${snapshot.id}`).set({
-//                         createdAt: new Date().toISOString(),
-//                         recipient: doc.data().userHandle,
-//                         sender: snapshot.data().userHandle,
-//                         type: 'like',
-//                         read: false,
-//                         screamId: doc.id
-//                     });
-//                 }
-//             })
-//             .catch(err => {
-//                 console.error(err);
-//                 return; // no need for response since db trigger, not api endpoint
-//             });
-//     });
-
-// exports.deleteNotificationOnUnlike = fbfunctions.region('us-central1').firestore.document('likes/{id}')
-//     .onDelete((snapshot) => {
-//         db.doc(`/notifications/${snapshot.id}`).delete()
-//             .catch(err => {
-//                 console.error(err);
-//                 return;
-//             });
-//         });
-
-// exports.createNotificationOnComment = fbfunctions.region('us-central1').firestore.document('comments/{id}')
-//     .onCreate((snapshot) => {
-//         db.doc(`/screams/${snapshot.data().screamId}`).get()
-//             .then(doc => {
-//                 if (doc.exists && doc.data().userHandle !== snapshot.data().userHandle){ // will always exist
-//                     return db.doc(`/notifications/${snapshot.id}`).set({
-//                         createdAt: new Date().toISOString(),
-//                         recipient: doc.data().userHandle,
-//                         sender: snapshot.data().userHandle,
-//                         type: 'comment',
-//                         read: false,
-//                         screamId: doc.id
-//                     })
-//                 }
-//             })
-//             .catch(err => {
-//                 console.error(err);
-//                 return; // no need for response since db trigger, not api endpoint
-//             });
-//     });

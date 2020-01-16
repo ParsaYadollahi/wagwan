@@ -15,7 +15,7 @@ import { connect } from 'react-redux';
 import { loginUser } from '../redux/actions/userActions'
 
 const styles = theme => ({
-    ...theme.spreadThis
+    ...theme.spreadThis,
 });
 
 
@@ -112,6 +112,9 @@ class login extends Component {
                             <small>
                                 Sign Up <Link to="/signup">Here</Link>
                             </small>
+                            <Typography style={{marginTop: '1px'}}>
+                                <Link style={{ fontSize: '14px' , color: '#1976d2' }} to="/reset">Reset Password</Link>
+                            </Typography>
                         </form>
                     </Grid>
 

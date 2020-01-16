@@ -24,6 +24,7 @@ import home from './pages/home';
 import login from './pages/login';
 import signup from './pages/signup';
 import user from './pages/users';
+import reset from './pages/reset'
 
 const theme = createMuiTheme(themeFile);
 
@@ -58,6 +59,7 @@ class App extends Component {
                   <AuthRoute exact path="/signup" component={signup} />
                   <Route exact path="/users/:handle" component={user} />
                   <Route exact path="/users/:handle/scream/:screamId" component={user} />
+                  <Route exact path="/reset" component={reset} />
                 </Switch>
               </div>
             </Router>

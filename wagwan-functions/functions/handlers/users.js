@@ -254,3 +254,11 @@ exports.leaveOnRead = (req, res) => {
             return res.status(500).json({ error: err.code });
         })
 }
+
+exports.resetPass = (email) => {
+    auth.sendPasswordResetEmail(emailAddress).then(function() {
+        alert('email Send')
+    }).catch(function(error) {
+        alert('failed')
+    });
+}
