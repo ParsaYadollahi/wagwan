@@ -5,10 +5,17 @@
 
   <testsuite name="firstTest"
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     errors="0" failures="0" hostname="" id="" package="firstTest" skipped="0"
     tests="3" time="16.75" timestamp="">
   
     <testcase name="Login Test" classname="firstTest" time="3.760" assertions="4">
+=======
+    errors="0" failures="1" hostname="" id="" package="firstTest" skipped="2"
+    tests="1" time="6.701" timestamp="">
+  
+    <testcase name="Login Test" classname="firstTest" time="6.701" assertions="2">
+>>>>>>> Stashed changes
 =======
     errors="0" failures="1" hostname="" id="" package="firstTest" skipped="2"
     tests="1" time="6.701" timestamp="">
@@ -22,6 +29,7 @@
     <failure message="    at Object.Login Test (/Users/parsa/dev/wagwan/wagwan-client/test/tests/firstTest.js:18:14)">    at processTicksAndRejections (internal/process/task_queues.js:97:5)</failure>
     </testcase>
   
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
     <testcase name="Signup Test" classname="firstTest" time="4.817" assertions="4">
 
@@ -43,6 +51,10 @@
 
     
 =======
+>>>>>>> Stashed changes
+=======
+
+  
 >>>>>>> Stashed changes
 
   
