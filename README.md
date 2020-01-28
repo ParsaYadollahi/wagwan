@@ -3,6 +3,8 @@ Social Media app that'll allow you to login/sign up, create posts, upload images
 
 The app is hosted on firebase in the following link:
 (https://wagwan-6797c.firebaseapp.com/)
+The wiki is:
+(https://github.com/ParsaYadollahi/wagwan/wiki)
 
 ![alt text](https://github.com/ParsaYadollahi/wagwan/blob/master/wagwan-client/src/images/blank_image.png)
 
