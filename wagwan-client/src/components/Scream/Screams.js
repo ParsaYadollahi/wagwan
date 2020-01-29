@@ -14,7 +14,7 @@ import { Link } from 'react-router-dom';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import Typography from "@material-ui/core/Typography"
+import Typography from "@material-ui/core/Typography";
 
 // Redux tings
 import { connect } from 'react-redux';
@@ -108,9 +108,9 @@ class Screams extends Component {
 
                     {/* Comments */}
                         <ScreamDialog
-                        screamId={screamId}
-                        userHandle={userHandle}
-                        openDialog={this.props.openDialog}
+                            screamId={screamId}
+                            userHandle={userHandle}
+                            openDialog={this.props.openDialog}
                         />
                     <span>{commentCount} comments</span>
 

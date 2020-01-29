@@ -24,7 +24,7 @@ import home from './pages/home';
 import login from './pages/login';
 import signup from './pages/signup';
 import user from './pages/users';
-import reset from './pages/reset'
+import reset from './pages/reset';
 
 const theme = createMuiTheme(themeFile);
 

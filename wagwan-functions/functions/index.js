@@ -46,6 +46,7 @@ app.post('/user', FBAuth, addUserDetails);
 app.get('/user', FBAuth, getAuthenticatedUser);
 app.get('/user/:handle', getUserDetails);
 app.post('/notifications', FBAuth, leaveOnRead);
+app.post('/reset', resetPass);
 
 // Good practice to have :
 // https://baseurl.com/api/.....

@@ -1,4 +1,4 @@
-import {
+import { // Import all the reducers to combine em
     createStore,
     combineReducers,
     applyMiddleware,

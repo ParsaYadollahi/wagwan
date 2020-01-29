@@ -96,6 +96,26 @@ exports.login =  (req, res) => {
     });
 };
 
+
+exports.resetPass = (req, res) => {
+    const email = req.body.email
+    firebase.
+        auth()
+        .sendPasswordResetEmail(
+            email
+        )
+        .then(() => {
+        console.log('email Send')
+        res.status(200).end()
+    }).catch((err) => {
+        res.status(200).json({
+            error: err.message ||
+            err.toString()
+        });
+    });
+};
+
+
 // Add user details
 exports.addUserDetails = (req, res) => {
     let userDetails = reduceUserDetails(req.body);
@@ -253,12 +273,4 @@ exports.leaveOnRead = (req, res) => {
             console.error(err);
             return res.status(500).json({ error: err.code });
         })
-}
-
-exports.resetPass = (email) => {
-    auth.sendPasswordResetEmail(emailAddress).then(function() {
-        alert('email Send')
-    }).catch(function(error) {
-        alert('failed')
-    });
 }
