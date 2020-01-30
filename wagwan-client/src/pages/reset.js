@@ -21,33 +21,39 @@ class reset extends Component {
   constructor() {
     super();
     this.state = {
-      email: "",
+      resetPass: false,
+      email: null,
       errors: {}
     };
-  }
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.UI.errors) {
-      this.setState({
-        errors: nextProps.UI.errors
-      });
-    }
   }
 
   handleSubmit = e => {
     e.preventDefault();
-    const user = { email: this.state.email };
-    axios
-      .post("/reset", user)
-      .then(() => {
-        alert("An Email has been sent to reset your password");
-      })
-      .catch(err => {
-        console.log(err);
+    if (this.state.email === null) {
+      const errorEmail = { email: "Please input an email" };
+      this.setState({
+        errors: errorEmail
       });
+    } else {
+      this.setState({
+        errors: ""
+      });
+      const user = { email: this.state.email };
+      axios
+        .post("/reset", user)
+        .then(() => {
+          this.setState({
+            resetPass: true
+          });
+        })
+        .catch(err => {
+          console.log(err);
+        });
 
-    this.setState({
-      email: ""
-    });
+      this.setState({
+        email: ""
+      });
+    }
   };
 
   handleChange = e => {
@@ -56,6 +62,11 @@ class reset extends Component {
     });
   };
   render() {
+    const displayResetPassword = this.state.resetPass ? (
+      <Typography color="secondary">
+        Your password reset email has been sent
+      </Typography>
+    ) : null;
     const {
       classes,
       UI: { loading }
@@ -83,11 +94,13 @@ class reset extends Component {
               label="Email"
               className={classes.TextField}
               helperText={errors.email} // Display the errors
-              error={errors.email ? true : false}
-              value={this.state.email}
+              error={this.state.errors.email ? true : false}
+              value={this.state.email || ""}
               onChange={this.handleChange}
               fullWidth
             />
+            <Typography>{}</Typography>
+            {displayResetPassword}
             <Button
               type="submit"
               variant="contained"
