@@ -23,47 +23,66 @@ export class Navbar extends Component {
     return (
       <AppBar>
         {/* Use toolbar because its inline - one after the other */}
-        <Toolbar className="nav-container">
+        <Toolbar>
           {/* When the user is logged in, they'll be prompted with these options */}
-          <Grid container alignItems="center">
-            <img
-              src={sixGod}
-              alt="6 mans"
-              style={{
-                borderRight: "0.1px solid black",
-                height: "20px",
-                padding: "5px 10px 5px 0"
-              }}
-            />
-            <Divider orientation="vertical" />
-            <Typography style={{ paddingLeft: "10px" }}>Wagwan</Typography>
-          </Grid>
-          {authenticated ? ( // if user is authenticated
+          <Grid
+            container
+            direction="row"
+            justify="flex-start"
+            alignItems="center"
+            style={{ width: "80%" }}
+          >
             <Fragment>
-              <PostScream id="postScreamTest" />
-
-              <Link to="/">
-                <CustomBotton tip="Home">
-                  <HomeIcon />
-                </CustomBotton>
+              <Link to="/" style={{ textDecoration: "none", color: "#000000" }}>
+                <img
+                  src={sixGod}
+                  alt="6 mans"
+                  style={{
+                    borderRight: "0.1px solid black",
+                    height: "20px",
+                    padding: "5px 12px 5px 0"
+                  }}
+                />
               </Link>
+              <Link to="/" style={{ textDecoration: "none", color: "#000000" }}>
+                <Typography style={{ marginLeft: "10px" }}>Wagwan</Typography>
+              </Link>
+            </Fragment>
+          </Grid>
 
-              <Notifications />
-            </Fragment>
-          ) : (
-            // When user is offline, they'll be prompted with these options
-            <Fragment>
-              <Button color="inherit" component={Link} to="/login">
-                Login
-              </Button>
-              <Button color="inherit" component={Link} to="/">
-                Home
-              </Button>
-              <Button color="inherit" component={Link} to="/signup">
-                Sign Up
-              </Button>
-            </Fragment>
-          )}
+          <Grid
+            container
+            direction="row"
+            justify="flex-start"
+            alignItems="center"
+          >
+            {authenticated ? ( // if user is authenticated
+              <Fragment>
+                <PostScream id="postScream" />
+
+                <Link to="/">
+                  <CustomBotton tip="Home">
+                    <HomeIcon style={{ color: "#FFFFFF" }} />
+                  </CustomBotton>
+                </Link>
+
+                <Notifications />
+              </Fragment>
+            ) : (
+              // When user is offline, they'll be prompted with these options
+              <Fragment>
+                <Button color="inherit" component={Link} to="/login">
+                  Login
+                </Button>
+                <Button color="inherit" component={Link} to="/">
+                  Home
+                </Button>
+                <Button color="inherit" component={Link} to="/signup">
+                  Sign Up
+                </Button>
+              </Fragment>
+            )}
+          </Grid>
         </Toolbar>
       </AppBar>
     );

@@ -64,12 +64,14 @@ class Notifications extends Component {
               } // Indicate the number of non read notifications
               color="secondary"
             >
-              <NotificationsIcon />
+              <NotificationsIcon style={{ color: "#FFFFFF" }} />
             </Badge>
           ))
-        : (notificationsIcon = <NotificationsIcon />); // An empty notification if there no new nots
+        : (notificationsIcon = (
+            <NotificationsIcon style={{ color: "#FFFFFF" }} />
+          )); // An empty notification if there no new nots
     } else {
-      notificationsIcon = <NotificationsIcon />; // An empty notification if there no new nots
+      notificationsIcon = <NotificationsIcon style={{ color: "#FFFFFF" }} />; // An empty notification if there no new nots
     }
 
     let notificationsMarkUp =
